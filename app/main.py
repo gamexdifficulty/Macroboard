@@ -26,7 +26,7 @@ class App(Engine):
 
         self.window_offset = [0,0]
 
-        self.text_font = pygame.font.Font(os.path.join("data","font.ttf"), 24)
+        self.text_font = pygame.font.Font(os.path.join("data","font.TTF"), 24)
         self.text_language = "en"
         self.text_translation = {}
 
