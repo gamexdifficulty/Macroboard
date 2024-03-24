@@ -27,7 +27,7 @@ neopixels.show()
 
 while True:
 
-    # -------------------- Serial Communication --------------------
+    # -------------------- Serial communication --------------------
 
     if runtime.serial_bytes_available:
         data = input().strip()
@@ -74,7 +74,7 @@ while True:
 
     neopixels.show()
 
-    # Keypad event handling
+    # -------------------- Keypad event handling -------------------
 
     keys = keypad.pressed_keys
     for y,layer in enumerate(keymap):
@@ -82,7 +82,7 @@ while True:
             index = y*4+x+1
             if index in keys and keymap[y][x] == False:
                 keymap[y][x] = True
-                print("press: ",x,y)
-            if not index in keys and keymap[y][x] == True:
+                print(f"01{index}")
+            elif not index in keys and keymap[y][x] == True:
                 keymap[y][x] = False
-                print("release: ",x,y)
+                print(f"00{index}")
