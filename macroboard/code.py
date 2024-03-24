@@ -47,6 +47,33 @@ while True:
                     leds = data[2:]
                     neopixels.fill([int(leds[0:3]),int(leds[3:6]),int(leds[6:])])
 
+    # -------------------- Led modes -------------------------------
+            
+    if led_mode == 0:
+        None
+    
+    elif led_mode == 1:
+        led_rainbow_index += led_speed
+        neopixels.fill(colorwheel(int(led_rainbow_index) & 255))
+
+    elif led_mode == 2:
+        led_rainbow_index += led_speed
+        for i in range(4):
+            neopixels[i] = colorwheel(int((i * 255 // 4) + led_rainbow_index) & 255)
+
+    elif led_mode == 3:
+        if led_breath_state == 0:
+            led_brightness = min(led_brightness+led_speed/20,1.0)
+            if led_brightness == 1.0:
+                led_breath_state = 1
+        elif led_breath_state == 1:
+            led_brightness = max(led_brightness-led_speed/20,0.0)
+            if led_brightness == 0.0:
+                led_breath_state = 0
+        neopixels.brightness = led_brightness
+
+    neopixels.show()
+
     # Keypad event handling
 
     keys = keypad.pressed_keys
