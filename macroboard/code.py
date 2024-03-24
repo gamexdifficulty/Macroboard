@@ -82,7 +82,7 @@ while True:
             index = y*4+x+1
             if index in keys and keymap[y][x] == False:
                 keymap[y][x] = True
-                print(f"01{index}")
+                print(f"101{index}")
             elif not index in keys and keymap[y][x] == True:
                 keymap[y][x] = False
-                print(f"00{index}")
+                print(f"100{index}")
