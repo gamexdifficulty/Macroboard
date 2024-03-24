@@ -636,10 +636,6 @@ class Input:
 
         self.mouse._update()
 
-        for joystick in self._reset_joy.copy():
-            joystick._reset()
-            self._reset_joy.remove(joystick)
-
     def _handle_key_event(self, event:pygame.Event):
 
         # Handel joystick button down event
@@ -997,7 +993,10 @@ class SaveManager():
             try:
                 data = self._decrypt()
                 if data != False:
-                    return data[key]
+                    if key in data:
+                        return data[key]
+                    else:
+                        return default
             except Exception as e:
                 self.engine.logger.error(e)
         else:
