@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="512"
+   height="512"
+   viewBox="0 0 135.46667 135.46667"
+   version="1.1"
+   id="svg5"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs2">
+    <linearGradient
+       id="swatch2">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient11212">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop11208" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop11210" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient11204">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop11200" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop11202" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient11062">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop11058" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:0;"
+         offset="1"
+         id="stop11060" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient11022">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop11020" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient10989">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop10987" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient10975">
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="0"
+         id="stop10973" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient5733">
+      <stop
+         style="stop-color:#0a7edd;stop-opacity:1;"
+         offset="0"
+         id="stop5729" />
+      <stop
+         style="stop-color:#14bc6f;stop-opacity:1;"
+         offset="1"
+         id="stop5731" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3146">
+      <stop
+         style="stop-color:#1a2344;stop-opacity:1;"
+         offset="0"
+         id="stop3142" />
+      <stop
+         style="stop-color:#121d2f;stop-opacity:1;"
+         offset="1"
+         id="stop3144" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient2029">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop2027" />
+    </linearGradient>
+  </defs>
+  <g
+     id="layer1">
+    <rect
+       style="fill:#030d25;fill-opacity:1;stroke:#0784e3;stroke-width:11.1125;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:markers fill stroke"
+       id="rect234"
+       width="124.35416"
+       height="124.35416"
+       x="5.5562501"
+       y="5.5562501"
+       ry="17.951736"
+       rx="17.951736" />
+    <g
+       id="g1">
+      <rect
+         style="fill:#0784e3;fill-opacity:1;stroke:none;stroke-width:7.93751;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         id="rect7948-2"
+         width="33.988907"
+         height="33.988907"
+         x="25.230402"
+         y="76.24736"
+         ry="5.7382903"
+         rx="5.7382903" />
+      <rect
+         style="fill:#0784e3;fill-opacity:1;stroke:none;stroke-width:7.9375;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         id="rect7948-2-4"
+         width="33.988907"
+         height="33.988907"
+         x="76.24736"
+         y="76.24736"
+         ry="5.7382903"
+         rx="5.7382903" />
+      <rect
+         style="fill:#0784e3;fill-opacity:1;stroke:none;stroke-width:7.93751;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         id="rect7948-0"
+         width="33.988903"
+         height="33.988907"
+         x="76.24736"
+         y="25.230139"
+         ry="5.7382903"
+         rx="5.7382903" />
+      <rect
+         style="fill:#0784e3;fill-opacity:1;stroke:none;stroke-width:7.93751;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:0;stroke-dasharray:none;stroke-opacity:1;paint-order:stroke fill markers"
+         id="rect7948"
+         width="33.988907"
+         height="33.988907"
+         x="25.230402"
+         y="25.230139"
+         ry="5.7382903"
+         rx="5.7382903" />
+    </g>
+  </g>
+</svg>
