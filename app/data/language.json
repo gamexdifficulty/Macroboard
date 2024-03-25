@@ -2,11 +2,19 @@
     "de":{
         "":"",
         "save":"Speichern",
-        "cancel":"Abbrechen"
+        "cancel":"Abbrechen",
+        "static":"Statisch",
+        "breath":"Athem",
+        "colorwheel":"Farbrad",
+        "rainbow": "Regenbogen"
     },
     "en":{
         "":"",
         "save":"Save",
-        "cancel":"Cancel"
+        "cancel":"Cancel",
+        "static":"Static",
+        "breath":"Breath",
+        "colorwheel":"Colorwheel",
+        "rainbow": "Rainbow"
     }
 }
