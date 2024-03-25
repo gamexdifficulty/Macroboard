@@ -24,6 +24,7 @@ class App(Engine):
         self.color_text_diff = [0,0,0]
 
         self.buttons = []
+        self.selects = []
         self.texts = []
 
         self.app_state = "full_view"
@@ -66,6 +67,7 @@ class App(Engine):
         self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language","language_id")
         self.add_layer_button = Button(self,[448,32],[96,112],self.switch_language,"addlayer")
 
+        self.select_overlay = None
         self.select_layer = Select(self,[96,32],[336,48],["Main"])
         self.select_color = Select(self,[96,96],[96,48],flag=1)
         self.select_color_mode = Select(self,[208,96],[224,48],["static","breath","colorwheel","rainbow"])
@@ -80,8 +82,8 @@ class App(Engine):
             for button in self.buttons:
                 button.reposition()
 
-            for switch in self.switches:
-                switch.reposition()
+            for select in self.selects:
+                select.reposition()
 
     def update(self):
         if self.app_state == "overlay":
@@ -122,8 +124,7 @@ class App(Engine):
             self.select_color.draw()
             self.select_color_mode.draw()
 
-    def board_button_click(self,id):
-        print(id)
+                self.select_overlay.draw_select()
 
     def translate(self,text_id):
         with open(os.path.join("data","language.json"),"r+") as f:
