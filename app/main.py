@@ -1,6 +1,7 @@
 import json
 from engine_light import *
 from data.classes.button import *
+from data.classes.select import *
 
 class App(Engine):
     def __init__(self):
@@ -21,7 +22,9 @@ class App(Engine):
         self.color_timer = 0
         self.color_bg_diff = [0,0,0]
         self.color_text_diff = [0,0,0]
+
         self.buttons = []
+        self.switches = []
 
         self.app_state = "full_view"
 
@@ -33,6 +36,7 @@ class App(Engine):
 
         self.theme_light_icon = pygame.image.load(os.path.join("data","sprites","sun.png")).convert_alpha()
         self.theme_dark_icon = pygame.image.load(os.path.join("data","sprites","moon.png")).convert_alpha()
+        self.add_layer_icon = pygame.image.load(os.path.join("data","sprites","new_layer.png")).convert_alpha()
 
         self.board_border = pygame.Rect(32,176,512,512)
         self.board_separator = pygame.Rect(576,32,16,656)
@@ -61,6 +65,9 @@ class App(Engine):
         self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language")
         self.add_layer_button = Button(self,[448,32],[96,112],self.switch_language,"addlayer")
 
+        self.select_layer = Select(self,[96,32],[336,48],["Main"])
+        self.select_color = Select(self,[96,96],[96,48],flag=1)
+        self.select_color_mode = Select(self,[208,96],[224,48],["static","breath","colorwheel","rainbow"])
 
     def event_window_resize(self, size: list[int]):
         if self.app_state == "full_view":
@@ -71,6 +78,9 @@ class App(Engine):
             
             for button in self.buttons:
                 button.reposition()
+
+            for switch in self.switches:
+                switch.reposition()
 
     def update(self):
         if self.app_state == "overlay":
@@ -84,6 +94,10 @@ class App(Engine):
             self.add_layer_button.update()
             for button in self.board_buttons:
                 button.update()
+
+            self.select_layer.update()
+            self.select_color.update()
+            self.select_color_mode.update()
     
     def draw(self):
         if self.app_state == "full_view":
@@ -98,9 +112,14 @@ class App(Engine):
                 self.window.render(self.theme_dark_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
             else:
                 self.window.render(self.theme_light_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
+            self.window.render(self.add_layer_icon,[self.add_layer_button.rect.x,self.add_layer_button.rect.y,self.add_layer_button.rect.w,self.add_layer_button.rect.h])
             self.cancel_button.draw()
             for button in self.board_buttons:
                 button.draw()
+
+            self.select_layer.draw()
+            self.select_color.draw()
+            self.select_color_mode.draw()
 
     def board_button_click(self,id):
         print(id)
