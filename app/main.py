@@ -24,14 +24,15 @@ class App(Engine):
         self.color_text_diff = [0,0,0]
 
         self.buttons = []
-        self.switches = []
+        self.texts = []
 
         self.app_state = "full_view"
 
         self.window_offset = [0,0]
 
         self.text_font = pygame.font.Font(os.path.join("data","font.TTF"), 24)
-        self.text_language = "en"
+        self.text_language = self.save_manager.load("language","en")
+        self.language_options = ["en","de"]
         self.text_translation = {}
 
         self.theme_light_icon = pygame.image.load(os.path.join("data","sprites","sun.png")).convert_alpha()
@@ -62,7 +63,7 @@ class App(Engine):
         self.save_button = Button(self,[628,592],[288,96],self.board_button_click,"save","save",flag=1)
         self.cancel_button = Button(self,[950,592],[288,96],self.board_button_click,"cancel","cancel")
         self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
-        self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language")
+        self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language","language_id")
         self.add_layer_button = Button(self,[448,32],[96,112],self.switch_language,"addlayer")
 
         self.select_layer = Select(self,[96,32],[336,48],["Main"])
@@ -132,8 +133,15 @@ class App(Engine):
             else:
                 return text_id
             
-    def switch_language(self,id):
-        print(id)
+    def switch_language(self,button):
+        index = self.language_options.index(self.text_language)+1
+        if index > len(self.language_options)-1:
+            index -= len(self.language_options)
+        self.text_language = self.language_options[index]
+        for text in self.texts:
+            text.check()
+
+        self.save_manager.save("language",self.text_language)
             
     def switch_theme(self,id):
         if self.color_timer == 0:

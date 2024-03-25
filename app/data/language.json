@@ -4,9 +4,10 @@
         "save":"Speichern",
         "cancel":"Abbrechen",
         "static":"Statisch",
-        "breath":"Athem",
+        "breath":"Atem",
         "colorwheel":"Farbrad",
-        "rainbow": "Regenbogen"
+        "rainbow": "Regenbogen",
+        "language_id": "DE"
     },
     "en":{
         "":"",
@@ -15,6 +16,7 @@
         "static":"Static",
         "breath":"Breath",
         "colorwheel":"Colorwheel",
-        "rainbow": "Rainbow"
+        "rainbow": "Rainbow",
+        "language_id": "EN"
     }
 }
