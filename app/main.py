@@ -21,6 +21,7 @@ class App(Engine):
         self.color_timer = 0
         self.color_bg_diff = [0,0,0]
         self.color_text_diff = [0,0,0]
+        self.buttons = []
 
         self.app_state = "full_view"
 
@@ -56,7 +57,10 @@ class App(Engine):
 
         self.save_button = Button(self,[628,592],[288,96],self.board_button_click,"save","save",flag=1)
         self.cancel_button = Button(self,[950,592],[288,96],self.board_button_click,"cancel","cancel")
-        self.theme_switch_button = Button(self,[32,32],[96,96],self.switch_theme,"theme")
+        self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
+        self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language")
+        self.add_layer_button = Button(self,[448,32],[96,112],self.switch_language,"addlayer")
+
 
     def event_window_resize(self, size: list[int]):
         if self.app_state == "full_view":
@@ -65,10 +69,7 @@ class App(Engine):
             self.board_border = pygame.Rect(32+self.window_offset[0],176+self.window_offset[1],self.board_border.w,self.board_border.h)
             self.board_separator = pygame.Rect(576+self.window_offset[0],32+self.window_offset[1],self.board_separator.w,self.board_separator.h)
             
-            self.save_button.reposition()
-            self.cancel_button.reposition()
-            self.theme_switch_button.reposition()
-            for button in self.board_buttons:
+            for button in self.buttons:
                 button.reposition()
 
     def update(self):
@@ -79,6 +80,8 @@ class App(Engine):
             self.save_button.update()
             self.cancel_button.update()
             self.theme_switch_button.update()
+            self.language_switch_button.update()
+            self.add_layer_button.update()
             for button in self.board_buttons:
                 button.update()
     
@@ -89,6 +92,8 @@ class App(Engine):
             pygame.draw.rect(self.window.main_surface,self.color_element,self.board_border,16,32)
             self.save_button.draw()
             self.theme_switch_button.draw()
+            self.language_switch_button.draw()
+            self.add_layer_button.draw()
             if self.color_theme == "light":
                 self.window.render(self.theme_dark_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
             else:
@@ -107,6 +112,9 @@ class App(Engine):
                 return self.text_translation[self.text_language][text_id]
             else:
                 return text_id
+            
+    def switch_language(self,id):
+        print(id)
             
     def switch_theme(self,id):
         if self.color_timer == 0:
