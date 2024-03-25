@@ -65,7 +65,7 @@ class App(Engine):
         self.cancel_button = Button(self,[950,592],[288,96],self.board_button_click,"cancel","cancel")
         self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
         self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language","language_id")
-        self.add_layer_button = Button(self,[448,32],[96,112],self.switch_language,"addlayer")
+        self.add_layer_button = Button(self,[448,32],[96,112],self.add_layer,"addlayer")
 
         self.select_overlay = None
         self.select_layer = Select(self,[96,32],[336,48],["Main"])
@@ -124,7 +124,14 @@ class App(Engine):
             self.select_color.draw()
             self.select_color_mode.draw()
 
+            if self.select_overlay != None:
                 self.select_overlay.draw_select()
+
+    def board_button_click(self,button):
+        print(button)
+
+    def add_layer(self,button):
+        print(button)
 
     def translate(self,text_id):
         with open(os.path.join("data","language.json"),"r+") as f:

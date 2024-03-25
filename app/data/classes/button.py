@@ -22,15 +22,24 @@ class Button:
     def update(self):
         if self.rect.collidepoint(self.engine.input.mouse.get_pos()):
             if self.engine.input.get("accept"):
-                self.function(self.id)
+                if self.engine.select_overlay == None:
+                    self.function(self.id)
+                elif not(self.engine.select_overlay.select_rect.collidepoint(self.engine.input.mouse.get_pos())):
+                    self.function(self.id)
 
     def draw(self):
         if self.flag == 1:
             pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.rect,border_radius=8)
         else:
             if self.rect.collidepoint(self.engine.input.mouse.get_pos()):
-                pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.rect,border_radius=8)
-                pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect_small,border_radius=4)
+                if self.engine.select_overlay == None:
+                    pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.rect,border_radius=8)
+                    pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect_small,border_radius=4)
+                elif not(self.engine.select_overlay.select_rect.collidepoint(self.engine.input.mouse.get_pos())):
+                    pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.rect,border_radius=8)
+                    pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect_small,border_radius=4)
+                else:
+                    pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect,border_radius=8)
             else:
                 pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect,border_radius=8)
         self.text.draw()
