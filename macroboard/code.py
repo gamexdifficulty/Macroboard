@@ -13,7 +13,7 @@ keymap = [[False,False,False,False],
           [False,False,False,False],
           [False,False,False,False]]
 
-led_mode = 2
+led_mode = 0
 led_speed = 0.1
 led_brightness = 1.0
 led_breath_state = 0
