@@ -9,13 +9,18 @@ class Text:
         self.highlight_sprite = self.engine.text_font.render(self.text, True, self.engine.color_highlight)
         self.rect = rect
         self.text_rect = self.sprite.get_rect()
-        self.pos = [self.rect.x+self.rect.w/2-self.text_rect.w/2,self.rect.y+self.rect.h/2-self.text_rect.h/2]
-        self.highlight = False
+        if self.rect.w != 0 and self.rect.h != 0:
+            self.pos = [self.rect.x+self.rect.w/2-self.text_rect.w/2,self.rect.y+self.rect.h/2-self.text_rect.h/2]
+        else:
+            self.pos = [self.rect.x,self.rect.y]
 
         self.engine.texts.append(self)
 
     def reposition(self):
-        self.pos = [self.rect.x+self.rect.w/2-self.text_rect.w/2+self.engine.window_offset[0],self.rect.y+self.rect.h/2-self.text_rect.h/2+self.engine.window_offset[1]]
+        if self.rect.w != 0 and self.rect.h != 0:
+            self.pos = [self.rect.x+self.rect.w/2-self.text_rect.w/2+self.engine.window_offset[0],self.rect.y+self.rect.h/2-self.text_rect.h/2+self.engine.window_offset[1]]
+        else:
+            self.pos = [self.rect.x+self.engine.window_offset[0],self.rect.y+self.engine.window_offset[1]]
 
     def check(self):
         self.text = self.engine.translate(self.text_id)
