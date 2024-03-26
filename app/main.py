@@ -28,6 +28,7 @@ class App(Engine):
         self.texts = []
 
         self.app_state = "full_view"
+        self.details_state = "layer"
 
         self.window_offset = [0,0]
 
@@ -61,6 +62,15 @@ class App(Engine):
             Button(self,[420,567],[96,96],self.board_button_click,"16"),
         ]
 
+        self.layer_text = [
+            Text(self,"layerview",pygame.Rect(622,32,648,24),True),
+            Text(self,"name",pygame.Rect(622,112,0,0),True),
+            Text(self,"color",pygame.Rect(622,192,0,0),True),
+            Text(self,"brightness",pygame.Rect(622,288,0,0),True),
+            Text(self,"effecttype",pygame.Rect(622,384,0,0),True),
+            Text(self,"effectspeed",pygame.Rect(622,480,0,0),True),
+        ]
+
         self.save_button = Button(self,[628,592],[288,96],self.board_button_click,"save","save",flag=1)
         self.cancel_button = Button(self,[950,592],[288,96],self.board_button_click,"cancel","cancel")
         self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
@@ -69,8 +79,12 @@ class App(Engine):
 
         self.select_overlay = None
         self.select_layer = Select(self,[96,32],[336,48],["Main"])
-        self.select_color = Select(self,[96,96],[96,48],flag=1)
-        self.select_color_mode = Select(self,[208,96],[224,48],["static","breath","colorwheel","rainbow"])
+        # self.select_color = Select(self,[96,96],[96,48],flag=1)
+        self.test_name = Select(self,[814,104],[424,48],["Main"])
+        self.test_color = Select(self,[814,184],[424,48],["XXX"])
+        self.test_brightness = Select(self,[814,280],[424,48],["XXX"])
+        self.test_effect_speed = Select(self,[814,376],[424,48],["XXX"])
+        self.select_color_mode = Select(self,[814,472],[424,48],["static","breath","colorwheel","rainbow"])
 
     def event_window_resize(self, size: list[int]):
         if self.app_state == "full_view":
@@ -84,6 +98,9 @@ class App(Engine):
 
             for select in self.selects:
                 select.reposition()
+
+            for text in self.layer_text:
+                text.reposition()
 
     def update(self):
         if self.app_state == "overlay":
@@ -99,8 +116,14 @@ class App(Engine):
                 button.update()
 
             self.select_layer.update()
-            self.select_color.update()
-            self.select_color_mode.update()
+            # self.select_color.update()
+
+            if self.details_state == "layer":
+                self.test_name.update()
+                self.test_color.update()
+                self.test_brightness.update()
+                self.test_effect_speed.update()
+                self.select_color_mode.update()
     
     def draw(self):
         if self.app_state == "full_view":
@@ -121,11 +144,20 @@ class App(Engine):
                 button.draw()
 
             self.select_layer.draw()
-            self.select_color.draw()
-            self.select_color_mode.draw()
+            # self.select_color.draw()
 
             if self.select_overlay != None:
                 self.select_overlay.draw_select()
+            
+            if self.details_state == "layer":
+                for text in self.layer_text:
+                    text.draw()
+
+                self.test_name.draw()
+                self.test_color.draw()
+                self.test_brightness.draw()
+                self.test_effect_speed.draw()
+                self.select_color_mode.draw()
 
     def board_button_click(self,button):
         button.selected = True

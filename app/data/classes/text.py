@@ -1,7 +1,7 @@
 import pygame
 
 class Text:
-    def __init__(self,engine,text_id,rect) -> None:
+    def __init__(self,engine,text_id,rect,highlight=False) -> None:
         self.engine = engine
         self.text_id = text_id
         self.text = self.engine.translate(self.text_id)
@@ -13,6 +13,7 @@ class Text:
             self.pos = [self.rect.x+self.rect.w/2-self.text_rect.w/2,self.rect.y+self.rect.h/2-self.text_rect.h/2]
         else:
             self.pos = [self.rect.x,self.rect.y]
+        self.highlight = highlight
 
         self.engine.texts.append(self)
 
