@@ -7,6 +7,12 @@
         "breath":"Atem",
         "colorwheel":"Farbrad",
         "rainbow": "Regenbogen",
+        "layerview": "Ebenenansicht:",
+        "name": "Name:",
+        "color": "Farbe:",
+        "brightness": "Helligkeit:",
+        "effectspeed": "Effekt Tempo:",
+        "effecttype": "Effekt Typ:",
         "language_id": "DE"
     },
     "en":{
@@ -17,6 +23,7 @@
         "breath":"Breath",
         "colorwheel":"Colorwheel",
         "rainbow": "Rainbow",
+        "layerview": "Layerview:",
         "language_id": "EN"
     }
 }
