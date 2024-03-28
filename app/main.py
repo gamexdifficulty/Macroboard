@@ -62,6 +62,8 @@ class App(Engine):
             Button(self,[420,567],[96,96],self.board_button_click,"16"),
         ]
 
+        self.layer_lable = Text(self,"Ebenen:",pygame.Rect(96,32,336+96+16,48),True)
+
         self.layer_text = [
             Text(self,"layerview",pygame.Rect(622,32,648,24),True),
             Text(self,"name",pygame.Rect(622,112,0,0),True),
@@ -71,14 +73,14 @@ class App(Engine):
             Text(self,"effectspeed",pygame.Rect(622,480,0,0),True),
         ]
 
-        self.save_button = Button(self,[628,592],[288,96],self.board_button_click,"save","save",flag=1)
-        self.cancel_button = Button(self,[950,592],[288,96],self.board_button_click,"cancel","cancel")
+        self.save_button = Button(self,[628,592],[288,96],self.board_button_click,"save","Neuer Layer",flag=1)
+        self.cancel_button = Button(self,[950,592],[288,96],self.board_button_click,"cancel","Löschen")
         self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
         self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language","language_id")
-        self.add_layer_button = Button(self,[448,32],[96,112],self.add_layer,"addlayer")
+        #self.add_layer_button = Button(self,[448,32],[96,112],self.add_layer,"addlayer")
 
         self.select_overlay = None
-        self.select_layer = Select(self,[96,32],[336,48],["Main"])
+        self.select_layer = Select(self,[96,96],[336+96+16,48],["Main"])
         # self.select_color = Select(self,[96,96],[96,48],flag=1)
         self.test_name = Select(self,[814,104],[424,48],["Main"])
         self.test_color = Select(self,[814,184],[424,48],["XXX"])
@@ -111,7 +113,7 @@ class App(Engine):
             self.cancel_button.update()
             self.theme_switch_button.update()
             self.language_switch_button.update()
-            self.add_layer_button.update()
+            # self.add_layer_button.update()
             for button in self.board_buttons:
                 button.update()
 
@@ -133,12 +135,13 @@ class App(Engine):
             self.save_button.draw()
             self.theme_switch_button.draw()
             self.language_switch_button.draw()
-            self.add_layer_button.draw()
+            self.layer_lable.draw()
+            # self.add_layer_button.draw()
             if self.color_theme == "light":
                 self.window.render(self.theme_dark_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
             else:
                 self.window.render(self.theme_light_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
-            self.window.render(self.add_layer_icon,[self.add_layer_button.rect.x,self.add_layer_button.rect.y,self.add_layer_button.rect.w,self.add_layer_button.rect.h])
+            # self.window.render(self.add_layer_icon,[self.add_layer_button.rect.x,self.add_layer_button.rect.y,self.add_layer_button.rect.w,self.add_layer_button.rect.h])
             self.cancel_button.draw()
             for button in self.board_buttons:
                 button.draw()
