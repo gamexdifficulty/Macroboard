@@ -1054,6 +1054,7 @@ class Window:
         self.mouse_visible = mouse_visible
         self.window_size = set_window_size
         self.resizable = resizable
+        self.icon = None
 
     def _create(self):
 
@@ -1100,6 +1101,8 @@ class Window:
             # Change window attributes
             pygame.display.set_caption(self.window_name)
             pygame.mouse.set_visible(self.mouse_visible)
+            if self.icon != None:
+                pygame.display.set_icon(self.icon)
 
     def render(self,sprite:pygame.Surface,pos:list[int,int] | pygame.Rect):
 
@@ -1264,6 +1267,9 @@ class Window:
 
         # Returning window size as a list of integers
         return self.window_size
+
+    def set_icon(self,icon:pygame.Surface):
+        self.icon = icon
 
 
 class Engine:

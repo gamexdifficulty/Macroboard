@@ -6,7 +6,7 @@ from data.classes.select import *
 class App(Engine):
     def __init__(self):
         super().__init__(delete_old_logs=True,nowindow=False,window_size=[1270,720],window_name="Macroboard",catch_error=False)
-        pygame.display.set_icon(pygame.image.load(os.path.join("data","sprites","icon.png")).convert_alpha())
+        self.window.set_icon(pygame.image.load(os.path.join("data","sprites","icon.png")).convert_alpha())
 
         self.first_boot = self.save_manager.load("first_boot",True)
 
