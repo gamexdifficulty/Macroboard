@@ -13,6 +13,9 @@
         "brightness": "Helligkeit:",
         "effectspeed": "Effekt Tempo:",
         "effecttype": "Effekt Typ:",
+        "new_layer": "Neuer Layer",
+        "delete": "Löschen",
+        "layer": "Ebene:",
         "language_id": "DE"
     },
     "en":{
@@ -24,6 +27,14 @@
         "colorwheel":"Colorwheel",
         "rainbow": "Rainbow",
         "layerview": "Layerview:",
+        "name": "Name:",
+        "color": "Color:",
+        "brightness": "Brightness:",
+        "effectspeed": "Effect Speed:",
+        "effecttype": "Effect Type:",
+        "new_layer": "New Layer",
+        "delete": "Delete",
+        "layer": "Layer:",
         "language_id": "EN"
     }
 }
