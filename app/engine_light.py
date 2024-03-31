@@ -730,6 +730,8 @@ class Logger:
         self.last_logged_message = ""
         self.repeat_log_times = 1
         self.time_format = "%d.%m.%y %H:%M:%S:%f"
+        if delete_old_logs:
+            self.logpath = os.path.join("logs","latest.log")
 
         if self.engine.logging:
             # Trying to create logfile
