@@ -2,7 +2,9 @@ import json
 from engine_light import *
 from data.classes.button import *
 from data.classes.select import *
+from data.classes.slider import *
 from data.classes.color import *
+from data.classes.input import *
 
 class App(Engine):
     def __init__(self):
@@ -21,6 +23,8 @@ class App(Engine):
 
         self.color_bg_target = self.color_bg.copy()
         self.color_text_target = self.color_text.copy()
+
+        self.select_overlay = None
         
         self.color_timer = 0
         self.color_bg_diff = [0,0,0]
@@ -28,6 +32,9 @@ class App(Engine):
 
         self.buttons = []
         self.selects = []
+        self.sliders = []
+        self.colors = []
+        self.inputs = []
         self.texts = []
 
         self.app_state = "full_view"
@@ -65,29 +72,28 @@ class App(Engine):
             Button(self,[420,567],[96,96],self.board_button_click,"16"),
         ]
 
-        self.layer_lable = Text(self,"Ebenen:",pygame.Rect(96,32,336+96+16,48),True)
+        self.layer_lable = Text(self,"layer",pygame.Rect(96,32,448,48),True)
         self.layer_text = [
             Text(self,"layerview",pygame.Rect(622,32,648,24),True),
             Text(self,"name",pygame.Rect(622,112,0,0),True),
             Text(self,"color",pygame.Rect(622,192,0,0),True),
             Text(self,"brightness",pygame.Rect(622,288,0,0),True),
-            Text(self,"effecttype",pygame.Rect(622,384,0,0),True),
-            Text(self,"effectspeed",pygame.Rect(622,480,0,0),True),
+            Text(self,"effectspeed",pygame.Rect(622,384,0,0),True),
+            Text(self,"effecttype",pygame.Rect(622,480,0,0),True),
         ]
 
-        self.save_button = Button(self,[628,592],[288,96],self.board_button_click,"save","Neuer Layer",flag=1)
-        self.cancel_button = Button(self,[950,592],[288,96],self.board_button_click,"cancel","Löschen")
+        self.layer_name_input = Input(self,[814,104],[424,48],"Main")
+        self.layer_brightness_slider = Slider(self,[814,280],[424,48])
+        self.layer_effect_type_select = Select(self,[814,472],[424,48],["static","breath","colorwheel","rainbow"])
+        self.layer_color_select = Color(self,[814,184],[424,48])
+        self.layer_effect_speed_slider = Slider(self,[814,376],[424,48])
+
+        self.layer_new_button = Button(self,[628,592],[288,96],self.board_button_click,"new_layer","new_layer",flag=1)
+        self.layer_delate_button = Button(self,[950,592],[288,96],self.board_button_click,"delete","delete")
+
+        self.select_layer = Select(self,[96,96],[336+96+16,48],["Main","x","X","X"])
         self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
         self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language","language_id")
-
-        self.select_overlay = None
-        self.select_layer = Select(self,[96,96],[336+96+16,48],["Main","x","X","X"])
-        self.test_name = Select(self,[814,104],[424,48],["Main","x","X","X"])
-        self.test_brightness = Select(self,[814,280],[424,48],["XXX"])
-        self.test_effect_speed = Select(self,[814,376],[424,48],["XXX"])
-        self.select_color_mode = Select(self,[814,472],[424,48],["static","breath","colorwheel","rainbow"])
-
-        self.color_select = Color(self,[814,184],[424,48])
 
     def event_window_resize(self, size: list[int]):
         if self.app_state == "full_view":
@@ -102,58 +108,70 @@ class App(Engine):
             for select in self.selects:
                 select.reposition()
 
-            for text in self.layer_text:
+            for slider in self.sliders:
+                slider.reposition()
+
+            for color in self.colors:
+                color.reposition()
+
+            for text in self.texts:
                 text.reposition()
 
+            for text_input in self.inputs:
+                text_input.reposition()
+
     def update(self):
-        if self.app_state == "overlay":
-            self.update_colors()
         if self.app_state == "full_view":
             self.update_colors()
-            self.save_button.update()
-            self.cancel_button.update()
+
+            self.select_layer.update()
             self.theme_switch_button.update()
             self.language_switch_button.update()
+
             for button in self.board_buttons:
                 button.update()
 
-            self.select_layer.update()
-
             if self.details_state == "layer":
-                self.test_name.update()
-                self.test_brightness.update()
-                self.test_effect_speed.update()
-                self.select_color_mode.update()
-                self.color_select.update()
+                self.layer_name_input.update()
+                self.layer_color_select.update()
+                self.layer_brightness_slider.update()
+                self.layer_effect_type_select.update()
+                self.layer_effect_speed_slider.update()
+                self.layer_new_button.update()
+                self.layer_delate_button.update()
     
     def draw(self):
         if self.app_state == "full_view":
             self.window.fill(self.color_bg)
+
             pygame.draw.rect(self.window.main_surface,self.color_element,self.board_separator,border_radius=32)
             pygame.draw.rect(self.window.main_surface,self.color_element,self.board_border,16,32)
-            self.save_button.draw()
+
             self.theme_switch_button.draw()
             self.language_switch_button.draw()
+
             self.layer_lable.draw()
+            self.select_layer.draw()
+
             if self.color_theme == "light":
                 self.window.render(self.theme_dark_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
             else:
                 self.window.render(self.theme_light_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
-            self.cancel_button.draw()
+
             for button in self.board_buttons:
                 button.draw()
-
-            self.select_layer.draw()
 
             if self.details_state == "layer":
                 for text in self.layer_text:
                     text.draw()
 
-                self.test_name.draw()
-                self.test_brightness.draw()
-                self.test_effect_speed.draw()
-                self.select_color_mode.draw()
-                self.color_select.draw()
+                self.layer_name_input.draw()
+                self.layer_color_select.draw()
+                self.layer_brightness_slider.draw()
+                self.layer_effect_type_select.draw()
+                self.layer_effect_speed_slider.draw()
+                self.layer_new_button.draw()
+                self.layer_delate_button.draw()
 
             if self.select_overlay != None:
                 self.select_overlay.draw_select()
@@ -165,7 +183,7 @@ class App(Engine):
         pass
 
     def translate(self,text_id):
-        with open(os.path.join("data","language.json"),"r+") as f:
+        with open(os.path.join("data","language.json"),"r+",encoding="UTF-8") as f:
             self.text_translation = json.load(f)
             if text_id in self.text_translation[self.text_language]:
                 return self.text_translation[self.text_language][text_id]
