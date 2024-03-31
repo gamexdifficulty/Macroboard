@@ -31,6 +31,8 @@ class Button:
     def draw(self):
         if self.flag == 1:
             pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.rect,border_radius=8)
+        elif self.flag == 2:
+            pygame.draw.rect(self.engine.window.main_surface,self.engine.color_attention,self.rect,border_radius=8)
         else:
             if self.selected == False:
                 if self.rect.collidepoint(self.engine.input.mouse.get_pos()):
