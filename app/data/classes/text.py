@@ -1,10 +1,14 @@
 import pygame
 
 class Text:
-    def __init__(self,engine,text_id,rect,highlight=False) -> None:
+    def __init__(self,engine,text_id,rect,highlight=False,translate=True) -> None:
         self.engine = engine
         self.text_id = text_id
-        self.text = self.engine.translate(self.text_id)
+        self.translate = translate
+        if self.translate:
+            self.text = self.engine.translate(self.text_id)
+        else:
+            self.text = text_id
         self.sprite = self.engine.text_font.render(self.text, True, self.engine.color_text)
         self.highlight_sprite = self.engine.text_font.render(self.text, True, self.engine.color_highlight)
         self.rect = rect
@@ -24,7 +28,11 @@ class Text:
             self.pos = [self.rect.x+self.engine.window_offset[0],self.rect.y+self.engine.window_offset[1]]
 
     def check(self):
-        self.text = self.engine.translate(self.text_id)
+        if self.translate:
+            self.text = self.engine.translate(self.text_id)
+            print(self.text)
+        else:
+            self.text = self.text
         self.sprite = self.engine.text_font.render(self.text, True, self.engine.color_text)
         self.highlight_sprite = self.engine.text_font.render(self.text, True, self.engine.color_highlight)
         self.text_rect = self.sprite.get_rect()
