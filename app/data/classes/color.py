@@ -3,7 +3,7 @@ import pygame
 from data.classes.text import *
 
 class Color:
-    def __init__(self,engine,pos,size) -> None:
+    def __init__(self,engine,pos,size,color=[0,0,0]) -> None:
         self.engine = engine
 
         self.pos = pos
@@ -30,7 +30,7 @@ class Color:
         self.round_sprite.set_colorkey((255,255,255))
         self.color_sprite.blit(self.round_sprite,(0,0))
         self.color_sprite.set_colorkey((0,0,0))
-        self.color = [0,0,0]
+        self.color = color
         self.last_message = ""
 
         self.selected = False
