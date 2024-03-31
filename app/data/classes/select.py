@@ -28,7 +28,6 @@ class Select:
             self.options_texts.append(Text(self.engine,option,pygame.Rect(self.select_rect.x,self.select_rect.y+self.item_height*y+8,self.rect.w,self.item_height)))
 
         self.open = False
-        self.flag = flag
 
         self.engine.selects.append(self)
 
@@ -51,11 +50,10 @@ class Select:
                     self.open = not self.open
             elif self.select_rect.collidepoint(self.engine.input.mouse.get_pos()) and self.open:
                 for y,text in enumerate(self.options_texts):
-                    if self.flag == None:
-                        if text.rect.collidepoint(self.engine.input.mouse.get_pos()):
-                            self.selected = y
-                            self.text = self.text = Text(self.engine,self.options[self.selected],pygame.Rect(self.rect.x,self.rect.y,self.rect.w-32,self.rect.h))
-                            self.open = False
+                    if text.rect.collidepoint(self.engine.input.mouse.get_pos()):
+                        self.selected = y
+                        self.text = self.text = Text(self.engine,self.options[self.selected],pygame.Rect(self.rect.x,self.rect.y,self.rect.w-32,self.rect.h))
+                        self.open = False
                     self.engine.input.reset("accept")
             else:
                 self.open = False
@@ -75,8 +73,7 @@ class Select:
     def draw(self):
         if self.open:
             pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect,border_top_left_radius=8,border_top_right_radius=8)
-            if self.flag == None:
-                self.engine.window.render(pygame.transform.rotate(self.select_sprite,180),self.sprite_pos)
+            self.engine.window.render(pygame.transform.rotate(self.select_sprite,180),self.sprite_pos)
         else:
             if self.rect.collidepoint(self.engine.input.mouse.get_pos()):
                 if self.engine.select_overlay == None:
@@ -89,13 +86,11 @@ class Select:
                     pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect,border_radius=8)
             else:
                 pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect,border_radius=8)
-            if self.flag == None:
-                self.engine.window.render(self.select_sprite,self.sprite_pos)
+            self.engine.window.render(self.select_sprite,self.sprite_pos)
         self.text.draw()
 
     def draw_select(self):
-        if self.flag == None:
-            pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.select_rect,border_bottom_left_radius=8,border_bottom_right_radius=8)
-            pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.select_rect_small,border_radius=4)
+        pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.select_rect,border_bottom_left_radius=8,border_bottom_right_radius=8)
+        pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.select_rect_small,border_radius=4)
         for text in self.options_texts:
             text.draw()
