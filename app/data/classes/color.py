@@ -9,8 +9,12 @@ class Color:
         self.pos = pos
         self.size = size
 
+        self.percentage = 0
+
         self.rect = pygame.Rect(pos[0],pos[1],size[0],size[1])
-        self.rect_small = pygame.Rect(self.rect.x+4,self.rect.y+4,self.rect.w-8,self.rect.h-8)
+
+        self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
+        self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
 
         self.color_sprite = pygame.Surface((self.rect.w, self.rect.h))
         self.color_sprite.fill((255, 255, 255))
@@ -26,15 +30,17 @@ class Color:
         self.round_sprite.set_colorkey((255,255,255))
         self.color_sprite.blit(self.round_sprite,(0,0))
         self.color_sprite.set_colorkey((0,0,0))
-        self.p = 0
         self.color = [0,0,0]
         self.last_message = ""
 
         self.selected = False
 
+        self.engine.colors.append(self)
+
     def reposition(self):
         self.rect = pygame.Rect(self.pos[0]+self.engine.window_offset[0],self.pos[1]+self.engine.window_offset[1],self.size[0],self.size[1])
-        self.rect_small = pygame.Rect(self.pos[0]+self.engine.window_offset[0]+4,self.pos[1]+self.engine.window_offset[1]+4,self.size[0]-8,self.size[1]-8)
+        self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
+        self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
 
     def update(self):
         if self.engine.input.get("released"):
@@ -48,17 +54,19 @@ class Color:
                     self.selected = True
 
         if self.selected:
-            self.p = (self.engine.input.mouse.get_pos()[0] - self.rect.x) / self.pwidth
-            self.p = (max(0, min(self.p, 1)))
+            self.percentage = (self.engine.input.mouse.get_pos()[0] - self.rect.x) / self.pwidth
+            self.percentage = (max(0, min(self.percentage, 1)))
             color = pygame.Color(0)
-            color.hsla = (int(self.p * 360), 100, 50, 100)
+            color.hsla = (int(self.percentage * 360), 100, 50, 100)
             self.color = [color.r,color.g,color.b]
+            self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
+            self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
 
     def draw(self):
         self.engine.window.render(self.color_sprite,[self.rect.x,self.rect.y])
         if self.selected:
-            pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,pygame.Rect(self.rect.x+self.p*self.rect.w-16-4,self.rect.y-4-4,32+8,self.rect.h+8+8),border_radius=4)
-            pygame.draw.rect(self.engine.window.main_surface,self.color,pygame.Rect(self.rect.x+self.p*self.rect.w-16,self.rect.y-4,32,self.rect.h+8),border_radius=2)
+            pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.rect_slider_outline,border_radius=4)
+            pygame.draw.rect(self.engine.window.main_surface,self.color,self.rect_slider_fill,border_radius=2)
         else:
-            pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,pygame.Rect(self.rect.x+self.p*self.rect.w-16-4,self.rect.y-4-4,32+8,self.rect.h+8+8),border_radius=4)
-            pygame.draw.rect(self.engine.window.main_surface,self.color,pygame.Rect(self.rect.x+self.p*self.rect.w-16-4,self.rect.y-4-4,32+8,self.rect.h+8+8),border_radius=2)
+            pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect_slider_outline,border_radius=4)
+            pygame.draw.rect(self.engine.window.main_surface,self.color,self.rect_slider_fill,border_radius=2)
