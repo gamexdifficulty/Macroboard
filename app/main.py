@@ -20,6 +20,7 @@ class App(Engine):
         self.color_element = self.save_manager.load("color_element",[37,44,62])
         self.color_text = self.save_manager.load("color_text",[235,245,255])
         self.color_highlight = self.save_manager.load("color_highlight",[7,132,227])
+        self.color_attention = self.save_manager.load("color_highlight",[242,8,7])
 
         self.color_bg_target = self.color_bg.copy()
         self.color_text_target = self.color_text.copy()
@@ -89,7 +90,7 @@ class App(Engine):
         self.layer_effect_speed_slider = Slider(self,[814,376],[424,48])
 
         self.layer_new_button = Button(self,[628,592],[288,96],self.board_button_click,"new_layer","new_layer",flag=1)
-        self.layer_delate_button = Button(self,[950,592],[288,96],self.board_button_click,"delete","delete")
+        self.layer_delate_button = Button(self,[950,592],[288,96],self.board_button_click,"delete","delete",flag=2)
 
         self.select_layer = Select(self,[96,96],[336+96+16,48],["Main","x","X","X"])
         self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
