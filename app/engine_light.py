@@ -363,8 +363,8 @@ class Input:
         self.autosave = True
         self.save_path = os.path.join("data","saves","input")
         self._registered_input = {
-            "accept":[[MOUSE_LEFTCLICK,CLICKED],[KEY_SPACE,CLICKED],[KEY_RETURN,CLICKED]],
-            "cancel":[[KEY_ESCAPE,CLICKED],[KEY_BACKSPACE,CLICKED]],
+            "accept":[[MOUSE_LEFTCLICK,CLICKED]],
+            "cancel":[[KEY_ESCAPE,CLICKED]],
         }
 
         # Setting default value for keys
