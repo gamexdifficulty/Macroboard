@@ -30,7 +30,6 @@ class Text:
     def check(self):
         if self.translate:
             self.text = self.engine.translate(self.text_id)
-            print(self.text)
         else:
             self.text = self.text
         self.sprite = self.engine.text_font.render(self.text, True, self.engine.color_text)
