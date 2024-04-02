@@ -41,6 +41,9 @@ class App(Engine):
         self.app_state = "full_view"
         self.details_state = "layer"
 
+        self.input_text = ""
+        self.max_input_text_length = 20
+
         self.window_offset = [0,0]
 
         self.text_font = pygame.font.Font(os.path.join("data","font.TTF"), 24)
@@ -120,6 +123,13 @@ class App(Engine):
 
             for text_input in self.inputs:
                 text_input.reposition()
+
+    def event_keydown(self, key: int, unicode: str):
+        if key == KEY_BACKSPACE[0]:
+            self.input_text = self.input_text[:-1]
+        elif unicode.isalpha() or key == KEY_SPACE[0]:
+            if len(self.input_text) < self.max_input_text_length:
+                self.input_text += unicode
 
     def update(self):
         if self.app_state == "full_view":

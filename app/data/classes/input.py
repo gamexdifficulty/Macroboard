@@ -16,7 +16,7 @@ class Input:
         self.selected = False
 
         self.text_id = text
-        self.text = Text(self.engine,self.text_id,pygame.Rect(self.rect.x,self.rect.y,self.rect.w-32,self.rect.h))
+        self.text = Text(self.engine,self.text_id,pygame.Rect(self.rect.x,self.rect.y,self.rect.w,self.rect.h))
 
         self.engine.inputs.append(self)
 
@@ -26,18 +26,20 @@ class Input:
         self.text.reposition()
 
     def update(self):
-        if self.engine.input.get("released"):
-            self.selected = False
-        elif self.engine.input.get("accept"):
+        if self.engine.input.get("accept"):
             if self.rect.collidepoint(self.engine.input.mouse.get_pos()):
                 if self.engine.select_overlay != None:
                     if not(self.engine.select_overlay.select_rect.collidepoint(self.engine.input.mouse.get_pos())):
                         self.selected = True
+                        self.engine.input_text = self.text.text
                 else:
                     self.selected = True
+                    self.engine.input_text = self.text.text
 
         if self.selected:
-            pass
+            self.text = Text(self.engine,self.engine.input_text,pygame.Rect(self.rect.x,self.rect.y,self.rect.w,self.rect.h))
+            if self.engine.input.get("accept") and not self.rect.collidepoint(self.engine.input.mouse.get_pos()):
+                self.selected = False
 
     def draw(self):
         if self.selected:
