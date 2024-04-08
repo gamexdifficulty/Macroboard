@@ -1224,7 +1224,7 @@ class Window:
 
     def set_icon(self,icon:pygame.Surface):
         self.icon = icon
-
+        pygame.display.set_icon(self.icon)
 
 class Engine:
     def __init__(self,
