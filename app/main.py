@@ -26,6 +26,7 @@ class App(Engine):
         self.color_text_target = self.color_text.copy()
 
         self.select_overlay = None
+        self.current_input = None
         
         self.color_timer = 0
         self.color_bg_diff = [0,0,0]
@@ -125,11 +126,22 @@ class App(Engine):
                 text_input.reposition()
 
     def event_keydown(self, key: int, unicode: str):
-        if key == KEY_BACKSPACE[0]:
-            self.input_text = self.input_text[:-1]
+        if key == KEY_BACKSPACE[0] and self.current_input.text_position != 0:
+            self.input_text = self.input_text[:self.current_input.text_position-1] + self.input_text[self.current_input.text_position:]
+            self.current_input.text_position = max(self.current_input.text_position-1,0)
+        if key == KEY_DELETE[0] and self.current_input.text_position != len(self.current_input.text.letter_rects):
+            self.input_text = self.input_text[:self.current_input.text_position] + self.input_text[self.current_input.text_position+1:]
         elif unicode.isalpha() or key == KEY_SPACE[0]:
             if len(self.input_text) < self.max_input_text_length:
-                self.input_text += unicode
+                self.input_text = self.input_text[:self.current_input.text_position] + unicode + self.input_text[self.current_input.text_position:]
+                self.current_input.text_position += 1
+
+        if key == KEY_ARROW_LEFT[0]:
+            if self.current_input:
+                self.current_input.text_position = max(self.current_input.text_position-1,0) 
+        elif key == KEY_ARROW_RIGHT[0]:
+            if self.current_input:
+                self.current_input.text_position = min(self.current_input.text_position+1,len(self.current_input.text.text)) 
 
     def update(self):
         if self.app_state == "full_view":
