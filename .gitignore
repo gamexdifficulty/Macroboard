@@ -1,6 +1,7 @@
 # Macroboard
 
 save
+export.zip
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
