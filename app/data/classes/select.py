@@ -3,7 +3,7 @@ import pygame
 from data.classes.text import *
 
 class Select:
-    def __init__(self,engine,pos,size,options=[""],flag=None,selected=0) -> None:
+    def __init__(self,engine,pos,size,onchange,options=[""],flag=None,selected=0) -> None:
         self.engine = engine
 
         self.pos = pos
@@ -29,6 +29,8 @@ class Select:
 
         self.open = False
 
+        self.function = onchange
+
         self.engine.selects.append(self)
 
     def reposition(self):
@@ -40,6 +42,25 @@ class Select:
         self.text.reposition()
         for text in self.options_texts:
             text.reposition()
+
+    def set_options(self,options):
+        self.options = options
+        
+        self.select_rect = pygame.Rect(self.rect.x,self.rect.y+self.rect.h,self.rect.w,(self.rect.h-16)*len(self.options))
+        self.select_rect_small = pygame.Rect(self.select_rect.x+4,self.select_rect.y+4,self.select_rect.w-8,self.select_rect.h-8)
+
+        self.select_sprite = pygame.image.load(os.path.join("data","sprites","select.png")).convert_alpha()
+        self.sprite_pos = [self.pos[0]+self.size[0]-48,self.pos[1]]
+
+        self.text = Text(self.engine,self.options[self.selected],pygame.Rect(self.rect.x,self.rect.y,self.rect.w-32,self.rect.h))
+        self.options_texts = []
+        self.item_height = (self.select_rect.h-16)/len(self.options)
+        for y,option in enumerate(self.options):
+            self.options_texts.append(Text(self.engine,option,pygame.Rect(self.select_rect.x,self.select_rect.y+self.item_height*y+8,self.rect.w,self.item_height)))
+
+    def set_selected(self,value:str):
+        self.selected = self.options.index(value)
+        self.text = Text(self.engine,self.options[self.selected],pygame.Rect(self.rect.x,self.rect.y,self.rect.w-32,self.rect.h))
 
     def update(self):
         if self.engine.input.get("accept"):
@@ -54,6 +75,7 @@ class Select:
                         self.selected = y
                         self.text = self.text = Text(self.engine,self.options[self.selected],pygame.Rect(self.rect.x,self.rect.y,self.rect.w-32,self.rect.h))
                         self.open = False
+                        self.function(self.selected)
                     self.engine.input.reset("accept")
             else:
                 self.open = False
