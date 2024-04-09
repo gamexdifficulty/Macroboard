@@ -26,6 +26,9 @@ class Input:
         self.rect_small = pygame.Rect(self.rect.x+4,self.rect.y+4,self.rect.w-8,self.rect.h-8)
         self.text.reposition()
 
+    def set_text(self,text):
+        self.text = Text(self.engine,text,pygame.Rect(self.rect.x,self.rect.y,self.rect.w,self.rect.h))
+
     def update(self):
         if self.engine.input.get("accept"):
             if self.rect.collidepoint(self.engine.input.mouse.get_pos()):
