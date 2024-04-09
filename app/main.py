@@ -93,8 +93,8 @@ class App(Engine):
         self.layer_color_select = Color(self,[814,184],[424,48],self.change_color)
         self.layer_effect_speed_slider = Slider(self,[814,376],[424,48],self.change_effect_speed)
 
-        self.layer_new_button = Button(self,[628,592],[288,96],self.board_button_click,"new_layer","new_layer",flag=1)
-        self.layer_delate_button = Button(self,[950,592],[288,96],self.board_button_click,"delete","delete",flag=2)
+        self.layer_new_button = Button(self,[628,592],[288,96],self.add_layer,"new_layer","new_layer",flag=1)
+        self.layer_delate_button = Button(self,[950,592],[288,96],self.delete_layer,"delete","delete",flag=2)
 
         self.select_layer = Select(self,[96,96],[336+96+16,48],self.layerchange)
         self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
@@ -221,8 +221,37 @@ class App(Engine):
     def board_button_click(self,button):
         button.selected = True
 
+    def delete_layer(self,button):
+        if len(self.config) > 1:
+            self.config.pop(self.current_layer_selected)
+            self.save_manager.save("config",self.config)
+
+            self.set_select_layer(min(max(self.current_layer_selected,0),len(self.config)-1))
+
+            options = []
+            for config in self.config:
+                options.append(config["name"])
+
+            self.select_layer.set_options(options)
+
     def add_layer(self,button):
-        pass
+        self.config.append({
+            "name":self.translate("new_layer"),
+            "bri":1.0,
+            "speed":0.5,
+            "color":[0,0,255],
+            "effect":"static",
+            "keys":{1:None,2:None,3:None,4:None,5:None,6:None,7:None,8:None,9:None,10:None,11:None,12:None,13:None,14:None,15:None,16:None,}
+        })
+        self.save_manager.save("config",self.config)
+
+        options = []
+        for config in self.config:
+            options.append(config["name"])
+
+        self.select_layer.set_options(options)
+
+        self.set_select_layer(len(self.config)-1)
 
     def translate(self,text_id):
         with open(os.path.join("data","language.json"),"r+",encoding="UTF-8") as f:
