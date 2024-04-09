@@ -29,6 +29,7 @@ class App(Engine):
         self.current_input = None
         
         self.color_timer = 0
+        self.current_layer_selected = 0
         self.color_bg_diff = [0,0,0]
         self.color_text_diff = [0,0,0]
 
@@ -100,6 +101,26 @@ class App(Engine):
         self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
         self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language","language_id")
 
+        self.config = self.save_manager.load("config",[])
+        if self.config == []:
+            self.config = [{
+                "name":"MainTest",
+                "bri":1.0,
+                "speed":0.5,
+                "color":[0,0,255],
+                "effect":"static",
+                "keys":{1:None,2:None,3:None,4:None,5:None,6:None,7:None,8:None,9:None,10:None,11:None,12:None,13:None,14:None,15:None,16:None,}
+            }]
+            self.save_manager.save("config",self.config)
+
+        options = []
+        for config in self.config:
+            options.append(config["name"])
+
+        self.select_layer.set_options(options)
+
+        self.set_select_layer(self.current_layer_selected)
+
     def event_window_resize(self, size: list[int]):
         if self.app_state == "full_view":
             self.window_offset = [size[0]/2-635,size[1]/2-360]
@@ -161,6 +182,15 @@ class App(Engine):
     def change_effect_speed(self,percentage):
         self.config[self.current_layer_selected]["speed"] = percentage
         self.save_manager.save("config",self.config)
+
+    def set_select_layer(self,index:int):
+        self.layer_name_input.set_text(self.config[index]["name"])
+        self.layer_color_select.set_color(self.config[index]["color"])
+        self.layer_brightness_slider.set_value(self.config[index]["bri"])
+        self.layer_effect_speed_slider.set_value(self.config[index]["speed"])
+        self.layer_effect_type_select.set_selected(self.config[index]["effect"])
+
+        self.select_layer.set_selected(self.config[index]["name"])
 
     def update(self):
         if self.app_state == "full_view":
