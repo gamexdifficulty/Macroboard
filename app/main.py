@@ -88,10 +88,10 @@ class App(Engine):
         ]
 
         self.layer_name_input = Input(self,[814,104],[424,48],"Main")
-        self.layer_brightness_slider = Slider(self,[814,280],[424,48])
+        self.layer_brightness_slider = Slider(self,[814,280],[424,48],self.change_brightness)
         self.layer_effect_type_select = Select(self,[814,472],[424,48],self.change_effect_type,["static","breath","colorwheel","rainbow"])
         self.layer_color_select = Color(self,[814,184],[424,48],self.change_color)
-        self.layer_effect_speed_slider = Slider(self,[814,376],[424,48])
+        self.layer_effect_speed_slider = Slider(self,[814,376],[424,48],self.change_effect_speed)
 
         self.layer_new_button = Button(self,[628,592],[288,96],self.board_button_click,"new_layer","new_layer",flag=1)
         self.layer_delate_button = Button(self,[950,592],[288,96],self.board_button_click,"delete","delete",flag=2)
@@ -146,11 +146,22 @@ class App(Engine):
     def change_color(self,color):
         self.config[self.current_layer_selected]["color"] = color
         self.save_manager.save("config",self.config)
+
     def change_effect_type(self,selected):
         self.config[self.current_layer_selected]["effect"] = self.layer_effect_type_select.options[selected-1]
         self.save_manager.save("config",self.config)
+
+    def change_brightness(self,percentage):
+        self.config[self.current_layer_selected]["bri"] = percentage
+        self.save_manager.save("config",self.config)
+    
     def layerchange(self,selected):
         self.set_select_layer(selected-1)
+
+    def change_effect_speed(self,percentage):
+        self.config[self.current_layer_selected]["speed"] = percentage
+        self.save_manager.save("config",self.config)
+
     def update(self):
         if self.app_state == "full_view":
             self.update_colors()
