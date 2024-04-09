@@ -3,7 +3,7 @@ import pygame
 from data.classes.text import *
 
 class Color:
-    def __init__(self,engine,pos,size,color=[0,0,0]) -> None:
+    def __init__(self,engine,pos,size,onchange,color=[0,0,0]) -> None:
         self.engine = engine
 
         self.pos = pos
@@ -32,6 +32,8 @@ class Color:
         self.color_sprite.set_colorkey((0,0,0))
         self.color = color
         self.last_message = ""
+        
+        self.function = onchange
 
         self.selected = False
 
@@ -39,6 +41,14 @@ class Color:
 
     def reposition(self):
         self.rect = pygame.Rect(self.pos[0]+self.engine.window_offset[0],self.pos[1]+self.engine.window_offset[1],self.size[0],self.size[1])
+        self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
+        self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
+    
+    def set_color(self,color:list):
+        self.percentage = (max(0, min(pygame.Color(color[0],color[1],color[2]).hsla[0]/360, 1)))
+        color = pygame.Color(0)
+        color.hsla = (int(self.percentage * 360), 100, 50, 100)
+        self.color = [color.r,color.g,color.b]
         self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
         self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
 
@@ -61,6 +71,7 @@ class Color:
             self.color = [color.r,color.g,color.b]
             self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
             self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
+            self.function(self.color)
 
     def draw(self):
         self.engine.window.render(self.color_sprite,[self.rect.x,self.rect.y])

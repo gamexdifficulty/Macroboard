@@ -90,7 +90,7 @@ class App(Engine):
         self.layer_name_input = Input(self,[814,104],[424,48],"Main")
         self.layer_brightness_slider = Slider(self,[814,280],[424,48])
         self.layer_effect_type_select = Select(self,[814,472],[424,48],["static","breath","colorwheel","rainbow"])
-        self.layer_color_select = Color(self,[814,184],[424,48])
+        self.layer_color_select = Color(self,[814,184],[424,48],self.change_color)
         self.layer_effect_speed_slider = Slider(self,[814,376],[424,48])
 
         self.layer_new_button = Button(self,[628,592],[288,96],self.board_button_click,"new_layer","new_layer",flag=1)
@@ -143,6 +143,9 @@ class App(Engine):
             if self.current_input:
                 self.current_input.text_position = min(self.current_input.text_position+1,len(self.current_input.text.text)) 
 
+    def change_color(self,color):
+        self.config[self.current_layer_selected]["color"] = color
+        self.save_manager.save("config",self.config)
     def update(self):
         if self.app_state == "full_view":
             self.update_colors()
