@@ -152,7 +152,7 @@ class App(Engine):
             self.current_input.text_position = max(self.current_input.text_position-1,0)
         if key == KEY_DELETE[0] and self.current_input.text_position != len(self.current_input.text.letter_rects):
             self.input_text = self.input_text[:self.current_input.text_position] + self.input_text[self.current_input.text_position+1:]
-        elif unicode.isalpha() or key == KEY_SPACE[0]:
+        elif unicode.isalpha() or unicode.isalnum() or key == KEY_SPACE[0]:
             if len(self.input_text) < self.max_input_text_length:
                 self.input_text = self.input_text[:self.current_input.text_position] + unicode + self.input_text[self.current_input.text_position:]
                 self.current_input.text_position += 1
