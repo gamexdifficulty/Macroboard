@@ -2,7 +2,7 @@ import pygame
 from data.classes.text import *
 
 class Input:
-    def __init__(self,engine,pos,size,text) -> None:
+    def __init__(self,engine,pos,size,text,function) -> None:
         self.engine = engine
 
         self.pos = pos
@@ -14,6 +14,7 @@ class Input:
         self.rect = pygame.Rect(pos[0],pos[1],size[0],size[1])
         self.rect_small = pygame.Rect(self.rect.x+4,self.rect.y+4,self.rect.w-8,self.rect.h-8)
 
+        self.function = function
         self.selected = False
 
         self.text_id = text

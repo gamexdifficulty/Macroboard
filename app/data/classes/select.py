@@ -3,7 +3,7 @@ import pygame
 from data.classes.text import *
 
 class Select:
-    def __init__(self,engine,pos,size,onchange,options=[""],flag=None,selected=0) -> None:
+    def __init__(self,engine,pos,size,function,options=[""],flag=None,selected=0) -> None:
         self.engine = engine
 
         self.pos = pos
@@ -29,7 +29,7 @@ class Select:
 
         self.open = False
 
-        self.function = onchange
+        self.function = function
 
         self.engine.selects.append(self)
 
@@ -75,7 +75,7 @@ class Select:
                         self.selected = y
                         self.text = self.text = Text(self.engine,self.options[self.selected],pygame.Rect(self.rect.x,self.rect.y,self.rect.w-32,self.rect.h))
                         self.open = False
-                        self.function(self.selected)
+                        self.function(self.engine,self.selected)
                     self.engine.input.reset("accept")
             else:
                 self.open = False

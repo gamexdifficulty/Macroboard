@@ -24,9 +24,9 @@ class Button:
         if self.rect.collidepoint(self.engine.input.mouse.get_pos()):
             if self.engine.input.get("accept"):
                 if self.engine.select_overlay == None:
-                    self.function(self)
+                    self.function(self.engine,self)
                 elif not(self.engine.select_overlay.select_rect.collidepoint(self.engine.input.mouse.get_pos())):
-                    self.function(self)
+                    self.function(self.engine,self)
 
     def draw(self):
         if self.flag == 1:

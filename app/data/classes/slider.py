@@ -2,7 +2,7 @@ import pygame
 from data.classes.text import *
 
 class Slider:
-    def __init__(self,engine,pos,size,onchange) -> None:
+    def __init__(self,engine,pos,size,function) -> None:
         self.engine = engine
 
         self.pos = pos
@@ -14,7 +14,7 @@ class Slider:
         self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
         self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
 
-        self.function = onchange
+        self.function = function
 
         self.selected = False
 
@@ -46,7 +46,7 @@ class Slider:
             self.percentage = (max(0, min(self.percentage, 1)))
             self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
             self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
-            self.function(self.percentage)
+            self.function(self.engine,self.percentage)
 
     def draw(self):
         pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect,border_radius=8)

@@ -3,7 +3,7 @@ import pygame
 from data.classes.text import *
 
 class Color:
-    def __init__(self,engine,pos,size,onchange,color=[0,0,0]) -> None:
+    def __init__(self,engine,pos,size,function,color=[0,0,0]) -> None:
         self.engine = engine
 
         self.pos = pos
@@ -33,7 +33,7 @@ class Color:
         self.color = color
         self.last_message = ""
         
-        self.function = onchange
+        self.function = function
 
         self.selected = False
 
@@ -71,7 +71,7 @@ class Color:
             self.color = [color.r,color.g,color.b]
             self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
             self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
-            self.function(self.color)
+            self.function(self.engine,self.color)
 
     def draw(self):
         self.engine.window.render(self.color_sprite,[self.rect.x,self.rect.y])
