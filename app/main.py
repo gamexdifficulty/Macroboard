@@ -13,6 +13,7 @@ class App(Engine):
         self.window.set_icon(pygame.image.load(os.path.join("data","sprites","icon.svg")).convert_alpha())
 
         self.first_boot = self.save_manager.load("first_boot",True)
+        self.save_manager.load("first_boot",False)
         
         self.input.load()
 
