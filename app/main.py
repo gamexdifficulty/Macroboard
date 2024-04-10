@@ -1,5 +1,6 @@
 import json
 from engine_light import *
+from data.functions.reactions import *
 from data.classes.button import *
 from data.classes.select import *
 from data.classes.slider import *
@@ -88,18 +89,18 @@ class App(Engine):
             Text(self,"effecttype",pygame.Rect(622,480,0,0),True),
         ]
 
-        self.layer_name_input = Input(self,[814,104],[424,48],"Main")
-        self.layer_brightness_slider = Slider(self,[814,280],[424,48],self.change_brightness)
-        self.layer_effect_type_select = Select(self,[814,472],[424,48],self.change_effect_type,["static","breath","colorwheel","rainbow"])
-        self.layer_color_select = Color(self,[814,184],[424,48],self.change_color)
-        self.layer_effect_speed_slider = Slider(self,[814,376],[424,48],self.change_effect_speed)
+        self.layer_name_input = Input(self,[814,104],[424,48],"Main",change_layer_name)
+        self.layer_brightness_slider = Slider(self,[814,280],[424,48],change_brightness)
+        self.layer_effect_type_select = Select(self,[814,472],[424,48],change_effect_type,["static","breath","colorwheel","rainbow"])
+        self.layer_color_select = Color(self,[814,184],[424,48],change_color)
+        self.layer_effect_speed_slider = Slider(self,[814,376],[424,48],change_effect_speed)
 
-        self.layer_new_button = Button(self,[628,592],[288,96],self.add_layer,"new_layer","new_layer",flag=1)
-        self.layer_delate_button = Button(self,[950,592],[288,96],self.delete_layer,"delete","delete",flag=2)
+        self.layer_new_button = Button(self,[628,592],[288,96],add_layer,"new_layer","new_layer",flag=1)
+        self.layer_delate_button = Button(self,[950,592],[288,96],delete_layer,"delete","delete",flag=2)
 
-        self.select_layer = Select(self,[96,96],[336+96+16,48],self.layerchange)
-        self.theme_switch_button = Button(self,[32,32],[48,48],self.switch_theme,"theme")
-        self.language_switch_button = Button(self,[32,96],[48,48],self.switch_language,"language","language_id")
+        self.select_layer = Select(self,[96,96],[336+96+16,48],layerchange)
+        self.theme_switch_button = Button(self,[32,32],[48,48],switch_theme,"theme")
+        self.language_switch_button = Button(self,[32,96],[48,48],switch_language,"language","language_id")
 
         self.config = self.save_manager.load("config",[])
         if self.config == []:
@@ -119,7 +120,7 @@ class App(Engine):
 
         self.select_layer.set_options(options)
 
-        self.set_select_layer(self.current_layer_selected)
+        set_select_layer(self,self.current_layer_selected)
 
     def event_window_resize(self, size: list[int]):
         if self.app_state == "full_view":
@@ -163,34 +164,6 @@ class App(Engine):
         elif key == KEY_ARROW_RIGHT[0]:
             if self.current_input:
                 self.current_input.text_position = min(self.current_input.text_position+1,len(self.current_input.text.text)) 
-
-    def change_color(self,color):
-        self.config[self.current_layer_selected]["color"] = color
-        self.save_manager.save("config",self.config)
-
-    def change_effect_type(self,selected):
-        self.config[self.current_layer_selected]["effect"] = self.layer_effect_type_select.options[selected-1]
-        self.save_manager.save("config",self.config)
-
-    def change_brightness(self,percentage):
-        self.config[self.current_layer_selected]["bri"] = percentage
-        self.save_manager.save("config",self.config)
-    
-    def layerchange(self,selected):
-        self.set_select_layer(selected-1)
-
-    def change_effect_speed(self,percentage):
-        self.config[self.current_layer_selected]["speed"] = percentage
-        self.save_manager.save("config",self.config)
-
-    def set_select_layer(self,index:int):
-        self.layer_name_input.set_text(self.config[index]["name"])
-        self.layer_color_select.set_color(self.config[index]["color"])
-        self.layer_brightness_slider.set_value(self.config[index]["bri"])
-        self.layer_effect_speed_slider.set_value(self.config[index]["speed"])
-        self.layer_effect_type_select.set_selected(self.config[index]["effect"])
-
-        self.select_layer.set_selected(self.config[index]["name"])
 
     def update(self):
         if self.app_state == "full_view":
@@ -251,38 +224,6 @@ class App(Engine):
     def board_button_click(self,button):
         button.selected = True
 
-    def delete_layer(self,button):
-        if len(self.config) > 1:
-            self.config.pop(self.current_layer_selected)
-            self.save_manager.save("config",self.config)
-
-            self.set_select_layer(min(max(self.current_layer_selected,0),len(self.config)-1))
-
-            options = []
-            for config in self.config:
-                options.append(config["name"])
-
-            self.select_layer.set_options(options)
-
-    def add_layer(self,button):
-        self.config.append({
-            "name":self.translate("new_layer"),
-            "bri":1.0,
-            "speed":0.5,
-            "color":[0,0,255],
-            "effect":"static",
-            "keys":{1:None,2:None,3:None,4:None,5:None,6:None,7:None,8:None,9:None,10:None,11:None,12:None,13:None,14:None,15:None,16:None,}
-        })
-        self.save_manager.save("config",self.config)
-
-        options = []
-        for config in self.config:
-            options.append(config["name"])
-
-        self.select_layer.set_options(options)
-
-        self.set_select_layer(len(self.config)-1)
-
     def translate(self,text_id):
         with open(os.path.join("data","language.json"),"r+",encoding="UTF-8") as f:
             self.text_translation = json.load(f)
@@ -290,31 +231,6 @@ class App(Engine):
                 return self.text_translation[self.text_language][text_id]
             else:
                 return text_id
-            
-    def switch_language(self,button):
-        index = self.language_options.index(self.text_language)+1
-        if index > len(self.language_options)-1:
-            index -= len(self.language_options)
-        self.text_language = self.language_options[index]
-        for text in self.texts:
-            text.check()
-
-        self.save_manager.save("language",self.text_language)
-            
-    def switch_theme(self,id):
-        if self.color_timer == 0:
-            if self.color_theme == "dark":
-                self.color_theme = "light"
-                self.color_bg_target = [235,245,255]
-            else:
-                self.color_theme = "dark"
-                self.color_bg_target = [13,17,32]
-
-            for i in range(len(self.color_bg_diff)):
-                self.color_bg_diff[i] = self.color_bg_target[i]-self.color_bg[i]
-
-            self.save_manager.save("color_theme",self.color_theme)
-            self.save_manager.save("color_bg",self.color_bg_target)
 
     def update_colors(self):
         if self.color_bg != self.color_bg_target:
