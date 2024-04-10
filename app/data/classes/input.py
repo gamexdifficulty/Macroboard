@@ -19,6 +19,7 @@ class Input:
 
         self.text_id = text
         self.text = Text(self.engine,self.text_id,pygame.Rect(self.rect.x,self.rect.y,self.rect.w,self.rect.h))
+        self.last_text = self.text
 
         self.engine.inputs.append(self)
 
@@ -57,6 +58,10 @@ class Input:
                 self.selected = False
                 if self.engine.current_input == self:
                     self.engine.current_input = None
+            
+            if self.text.text != self.last_text.text:
+                self.function(self.engine,self.text.text)
+                self.last_text = self.text
 
     def draw(self):
         if self.selected:
