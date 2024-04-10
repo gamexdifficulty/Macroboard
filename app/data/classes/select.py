@@ -45,6 +45,8 @@ class Select:
 
     def set_options(self,options):
         self.options = options
+
+        self.selected = min(max(self.selected,0),len(self.options)-1)
         
         self.select_rect = pygame.Rect(self.rect.x,self.rect.y+self.rect.h,self.rect.w,(self.rect.h-16)*len(self.options))
         self.select_rect_small = pygame.Rect(self.select_rect.x+4,self.select_rect.y+4,self.select_rect.w-8,self.select_rect.h-8)
