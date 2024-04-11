@@ -31,6 +31,7 @@ class Color:
         self.color_sprite.blit(self.round_sprite,(0,0))
         self.color_sprite.set_colorkey((0,0,0))
         self.color = color
+        self.last_color = color
         self.last_message = ""
         
         self.function = function
@@ -71,7 +72,9 @@ class Color:
             self.color = [color.r,color.g,color.b]
             self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
             self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
-            self.function(self.engine,self.color)
+            if self.color != self.last_color:
+                self.function(self.engine,self.color)
+                self.last_color = self.color
 
     def draw(self):
         self.engine.window.render(self.color_sprite,[self.rect.x,self.rect.y])
