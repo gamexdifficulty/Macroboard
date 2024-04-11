@@ -6,6 +6,7 @@ from data.classes.select import *
 from data.classes.slider import *
 from data.classes.color import *
 from data.classes.input import *
+import serial.tools.list_ports
 
 class App(Engine):
     def __init__(self):
@@ -48,12 +49,6 @@ class App(Engine):
         self.colors = []
         self.inputs = []
         self.texts = []
-
-        self.app_state = "full_view"
-        self.details_state = "layer"
-
-        self.input_text = ""
-        self.max_input_text_length = 20
 
         self.window_offset = [0,0]
 
@@ -126,6 +121,26 @@ class App(Engine):
             options.append(config["name"])
 
         self.select_layer.set_options(options)
+
+        self.serial_connected = False
+        self.pyserial = None
+
+        self.i = 0
+
+        while not self.serial_connected:
+            try:
+                macroport = "COM4"
+                ports = serial.tools.list_ports.comports()
+                for port, desc, hwid in sorted(ports):
+                    if hwid.find("USB VID:PID=0001:0001") != -1:
+                        macroport = port
+                self.pyserial = serial.Serial(macroport, 115200)
+            except Exception as e:
+                print(e)
+                time.sleep(3)
+            else:
+                self.serial_connected = True
+                print("connected")
 
         set_select_layer(self,self.current_layer_selected)
 

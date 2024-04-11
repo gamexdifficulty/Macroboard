@@ -12,6 +12,12 @@ def change_color(engine,color):
     engine.config[engine.current_layer_selected]["color"] = color
     engine.save_manager.save("config",engine.config)
 
+    engine.i += 1
+    message = f"03{color[0]:>03}{color[1]:>03}{color[2]:>03}\r".encode()
+
+    engine.pyserial.flushInput()
+    engine.pyserial.write(message)
+
 def change_effect_type(engine,selected):
     engine.config[engine.current_layer_selected]["effect"] = engine.layer_effect_type_select.options[selected]
     engine.save_manager.save("config",engine.config)
@@ -19,6 +25,11 @@ def change_effect_type(engine,selected):
 def change_brightness(engine,percentage):
     engine.config[engine.current_layer_selected]["bri"] = percentage
     engine.save_manager.save("config",engine.config)
+
+    message = f"01{round(percentage,3)}".encode()
+    engine.pyserial.flushInput()
+    print(message)
+    engine.pyserial.write(message)
 
 def layerchange(engine,selected):
     set_select_layer(engine,selected)
@@ -72,10 +83,10 @@ def add_layer(engine,button):
     set_select_layer(engine,len(engine.config)-1)
 
 def switch_language(engine,button):
-    index = engine.language_options.index(engine.text_language)+1
-    if index > len(engine.language_options)-1:
-        index -= len(engine.language_options)
-    engine.text_language = engine.language_options[index]
+    index = engine.text_language_options.index(engine.text_language)+1
+    if index > len(engine.text_language_options)-1:
+        index -= len(engine.text_language_options)
+    engine.text_language = engine.text_language_options[index]
     for text in engine.texts:
         text.check()
 
