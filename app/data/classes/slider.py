@@ -9,6 +9,7 @@ class Slider:
         self.size = size
 
         self.percentage = 0
+        self.last_percentage = self.percentage
 
         self.rect = pygame.Rect(pos[0],pos[1],size[0],size[1])
         self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
@@ -46,7 +47,9 @@ class Slider:
             self.percentage = (max(0, min(self.percentage, 1)))
             self.rect_slider_outline = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-20,self.rect.w-40),0),self.rect.y-8,40,self.rect.h+16)
             self.rect_slider_fill = pygame.Rect(self.rect.x+max(min(self.percentage*self.rect.w-16,self.rect.w-36),4),self.rect.y-4,32,self.rect.h+8)
-            self.function(self.engine,self.percentage)
+            if self.percentage != self.last_percentage:
+                self.function(self.engine,self.percentage)
+                self.last_percentage = self.percentage
 
     def draw(self):
         pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect,border_radius=8)
