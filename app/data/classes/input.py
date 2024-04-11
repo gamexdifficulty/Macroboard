@@ -43,21 +43,21 @@ class Input:
                         if not(self.engine.select_overlay.select_rect.collidepoint(self.engine.input.mouse.get_pos())):
                             self.selected = True
                             self.engine.input_text = self.text.text
-                            self.engine.current_input = self
+                            self.engine.input_current = self
                             self.text_position = len(self.text.text)
                 else:
                     if not self.selected:
                         self.selected = True
                         self.engine.input_text = self.text.text
-                        self.engine.current_input = self
+                        self.engine.input_current = self
                         self.text_position = len(self.text.text)
 
         if self.selected:
             self.text = Text(self.engine,self.engine.input_text,pygame.Rect(self.rect.x,self.rect.y,self.rect.w,self.rect.h))
             if self.engine.input.get("accept") and not self.rect.collidepoint(self.engine.input.mouse.get_pos()):
                 self.selected = False
-                if self.engine.current_input == self:
-                    self.engine.current_input = None
+                if self.engine.input_current == self:
+                    self.engine.input_current = None
             
             if self.text.text != self.last_text.text:
                 self.function(self.engine,self.text.text)

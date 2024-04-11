@@ -17,6 +17,13 @@ class App(Engine):
         
         self.input.load()
 
+        self.app_state = "full_view"
+        self.details_state = "layer"
+
+        self.select_overlay = None
+        
+        self.current_layer_selected = 0
+
         self.color_theme = self.save_manager.load("color_theme","dark")
         self.color_bg = self.save_manager.load("color_bg",[13,17,32])
         self.color_element = self.save_manager.load("color_element",[37,44,62])
@@ -27,14 +34,14 @@ class App(Engine):
         self.color_bg_target = self.color_bg.copy()
         self.color_text_target = self.color_text.copy()
 
-        self.select_overlay = None
-        self.current_input = None
-        
         self.color_timer = 0
-        self.current_layer_selected = 0
         self.color_bg_diff = [0,0,0]
         self.color_text_diff = [0,0,0]
 
+        self.input_current = None
+        self.input_text = ""
+        self.input_max_length = 20
+        
         self.buttons = []
         self.selects = []
         self.sliders = []
@@ -52,12 +59,11 @@ class App(Engine):
 
         self.text_font = pygame.font.Font(os.path.join("data","font.TTF"), 24)
         self.text_language = self.save_manager.load("language","en")
-        self.language_options = ["en","de"]
+        self.text_language_options = ["en","de"]
         self.text_translation = {}
 
-        self.theme_light_icon = pygame.image.load(os.path.join("data","sprites","sun.png")).convert_alpha()
-        self.theme_dark_icon = pygame.image.load(os.path.join("data","sprites","moon.png")).convert_alpha()
-        self.add_layer_icon = pygame.image.load(os.path.join("data","sprites","new_layer.png")).convert_alpha()
+        self.icon_theme_light = pygame.image.load(os.path.join("data","sprites","sun.png")).convert_alpha()
+        self.icon_theme_dark = pygame.image.load(os.path.join("data","sprites","moon.png")).convert_alpha()
 
         self.board_border = pygame.Rect(32,176,512,512)
         self.board_separator = pygame.Rect(576,32,16,656)
@@ -149,22 +155,22 @@ class App(Engine):
                 text_input.reposition()
 
     def event_keydown(self, key: int, unicode: str):
-        if key == KEY_BACKSPACE[0] and self.current_input.text_position != 0:
-            self.input_text = self.input_text[:self.current_input.text_position-1] + self.input_text[self.current_input.text_position:]
-            self.current_input.text_position = max(self.current_input.text_position-1,0)
-        if key == KEY_DELETE[0] and self.current_input.text_position != len(self.current_input.text.letter_rects):
-            self.input_text = self.input_text[:self.current_input.text_position] + self.input_text[self.current_input.text_position+1:]
+        if key == KEY_BACKSPACE[0] and self.input_current.text_position != 0:
+            self.input_text = self.input_text[:self.input_current.text_position-1] + self.input_text[self.input_current.text_position:]
+            self.input_current.text_position = max(self.input_current.text_position-1,0)
+        if key == KEY_DELETE[0] and self.input_current.text_position != len(self.input_current.text.letter_rects):
+            self.input_text = self.input_text[:self.input_current.text_position] + self.input_text[self.input_current.text_position+1:]
         elif unicode.isalpha() or unicode.isalnum() or key == KEY_SPACE[0]:
-            if len(self.input_text) < self.max_input_text_length:
-                self.input_text = self.input_text[:self.current_input.text_position] + unicode + self.input_text[self.current_input.text_position:]
-                self.current_input.text_position += 1
+            if len(self.input_text) < self.input_max_length:
+                self.input_text = self.input_text[:self.input_current.text_position] + unicode + self.input_text[self.input_current.text_position:]
+                self.input_current.text_position += 1
 
         if key == KEY_ARROW_LEFT[0]:
-            if self.current_input:
-                self.current_input.text_position = max(self.current_input.text_position-1,0) 
+            if self.input_current:
+                self.input_current.text_position = max(self.input_current.text_position-1,0) 
         elif key == KEY_ARROW_RIGHT[0]:
-            if self.current_input:
-                self.current_input.text_position = min(self.current_input.text_position+1,len(self.current_input.text.text)) 
+            if self.input_current:
+                self.input_current.text_position = min(self.input_current.text_position+1,len(self.input_current.text.text)) 
 
     def update(self):
         if self.app_state == "full_view":
@@ -200,9 +206,9 @@ class App(Engine):
             self.select_layer.draw()
 
             if self.color_theme == "light":
-                self.window.render(self.theme_dark_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
+                self.window.render(self.icon_theme_dark,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
             else:
-                self.window.render(self.theme_light_icon,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
+                self.window.render(self.icon_theme_light,[self.theme_switch_button.rect.x,self.theme_switch_button.rect.y])
 
             for button in self.board_buttons:
                 button.draw()
