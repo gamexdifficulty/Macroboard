@@ -121,3 +121,12 @@ def back_to_layer(engine,button):
     engine.details_state = "layer"
     for loop_button in engine.board_buttons:
         loop_button.selected = False
+
+def add_macro(engine,button):
+    engine.details_state = "macroselect"
+
+def back_to_button(engine,button):
+    engine.details_state = "button"
+
+def change_button_name(engine,name):
+    pass
