@@ -63,23 +63,25 @@ class App(Engine):
         self.board_border = pygame.Rect(32,176,512,512)
         self.board_separator = pygame.Rect(576,32,16,656)
         self.board_buttons = [
-            Button(self,[57,201],[96,96],self.board_button_click,"1","ABC"),
-            Button(self,[178,201],[96,96],self.board_button_click,"2"),
-            Button(self,[299,201],[96,96],self.board_button_click,"3"),
-            Button(self,[420,201],[96,96],self.board_button_click,"4"),
-            Button(self,[57,322],[96,96],self.board_button_click,"5"),
-            Button(self,[178,322],[96,96],self.board_button_click,"6"),
-            Button(self,[299,322],[96,96],self.board_button_click,"7"),
-            Button(self,[420,322],[96,96],self.board_button_click,"8"),
-            Button(self,[57,443],[96,96],self.board_button_click,"9"),
-            Button(self,[178,443],[96,96],self.board_button_click,"10"),
-            Button(self,[299,443],[96,96],self.board_button_click,"11"),
-            Button(self,[420,443],[96,96],self.board_button_click,"12"),
-            Button(self,[57,567],[96,96],self.board_button_click,"13"),
-            Button(self,[178,567],[96,96],self.board_button_click,"14"),
-            Button(self,[299,567],[96,96],self.board_button_click,"15"),
-            Button(self,[420,567],[96,96],self.board_button_click,"16"),
+            Button(self,[57,201],[96,96],board_button_click,"1","ABC"),
+            Button(self,[178,201],[96,96],board_button_click,"2"),
+            Button(self,[299,201],[96,96],board_button_click,"3"),
+            Button(self,[420,201],[96,96],board_button_click,"4"),
+            Button(self,[57,322],[96,96],board_button_click,"5"),
+            Button(self,[178,322],[96,96],board_button_click,"6"),
+            Button(self,[299,322],[96,96],board_button_click,"7"),
+            Button(self,[420,322],[96,96],board_button_click,"8"),
+            Button(self,[57,443],[96,96],board_button_click,"9"),
+            Button(self,[178,443],[96,96],board_button_click,"10"),
+            Button(self,[299,443],[96,96],board_button_click,"11"),
+            Button(self,[420,443],[96,96],board_button_click,"12"),
+            Button(self,[57,567],[96,96],board_button_click,"13"),
+            Button(self,[178,567],[96,96],board_button_click,"14"),
+            Button(self,[299,567],[96,96],board_button_click,"15"),
+            Button(self,[420,567],[96,96],board_button_click,"16"),
         ]
+
+        self.board_back_button = Button(self,[622,32],[128,48],back_to_layer,"","back")
 
         self.layer_lable = Text(self,"layer",pygame.Rect(96,32,448,48),True)
         self.layer_text = [
@@ -127,20 +129,20 @@ class App(Engine):
 
         self.i = 0
 
-        while not self.serial_connected:
-            try:
-                macroport = "COM4"
-                ports = serial.tools.list_ports.comports()
-                for port, desc, hwid in sorted(ports):
-                    if hwid.find("USB VID:PID=0001:0001") != -1:
-                        macroport = port
-                self.pyserial = serial.Serial(macroport, 115200)
-            except Exception as e:
-                print(e)
-                time.sleep(3)
-            else:
-                self.serial_connected = True
-                print("connected")
+        #while not self.serial_connected:
+        #    try:
+        #        macroport = "COM4"
+        #        ports = serial.tools.list_ports.comports()
+        #        for port, desc, hwid in sorted(ports):
+        #            if hwid.find("USB VID:PID=0001:0001") != -1:
+        #                macroport = port
+        #        self.pyserial = serial.Serial(macroport, 115200)
+        #    except Exception as e:
+        #        print(e)
+        #        time.sleep(3)
+        #    else:
+        #        self.serial_connected = True
+        #        print("connected")
 
         set_select_layer(self,self.current_layer_selected)
 
@@ -176,7 +178,7 @@ class App(Engine):
         if key == KEY_DELETE[0] and self.input_current.text_position != len(self.input_current.text.letter_rects):
             self.input_text = self.input_text[:self.input_current.text_position] + self.input_text[self.input_current.text_position+1:]
         elif unicode.isalpha() or unicode.isalnum() or key == KEY_SPACE[0]:
-            if len(self.input_text) < self.input_max_length:
+            if len(self.input_text) < self.input_max_length and self.input_current:
                 self.input_text = self.input_text[:self.input_current.text_position] + unicode + self.input_text[self.input_current.text_position:]
                 self.input_current.text_position += 1
 
@@ -206,6 +208,9 @@ class App(Engine):
                 self.layer_effect_speed_slider.update()
                 self.layer_new_button.update()
                 self.layer_delate_button.update()
+
+            if self.details_state == "button":
+                self.board_back_button.update()
     
     def draw(self):
         if self.app_state == "full_view":
@@ -240,11 +245,11 @@ class App(Engine):
                 self.layer_new_button.draw()
                 self.layer_delate_button.draw()
 
+            if self.details_state == "button":
+                self.board_back_button.draw()
+
             if self.select_overlay != None:
                 self.select_overlay.draw_select()
-
-    def board_button_click(self,button):
-        button.selected = True
 
     def translate(self,text_id):
         with open(os.path.join("data","language.json"),"r+",encoding="UTF-8") as f:

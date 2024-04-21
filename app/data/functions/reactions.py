@@ -15,8 +15,8 @@ def change_color(engine,color):
     engine.i += 1
     message = f"03{color[0]:>03}{color[1]:>03}{color[2]:>03}\r".encode()
 
-    engine.pyserial.flushInput()
-    engine.pyserial.write(message)
+    #engine.pyserial.flushInput()
+    #engine.pyserial.write(message)
 
 def change_effect_type(engine,selected):
     engine.config[engine.current_layer_selected]["effect"] = engine.layer_effect_type_select.options[selected]
@@ -27,11 +27,13 @@ def change_brightness(engine,percentage):
     engine.save_manager.save("config",engine.config)
 
     message = f"01{round(percentage,3)}".encode()
-    engine.pyserial.flushInput()
-    print(message)
-    engine.pyserial.write(message)
+    #engine.pyserial.flushInput()
+    #engine.pyserial.write(message)
 
 def layerchange(engine,selected):
+    engine.details_state = "layer"
+    for loop_button in engine.board_buttons:
+        loop_button.selected = False
     set_select_layer(engine,selected)
 
 def change_effect_speed(engine,percentage):
@@ -106,3 +108,14 @@ def switch_theme(engine,id):
 
         engine.save_manager.save("color_theme",engine.color_theme)
         engine.save_manager.save("color_bg",engine.color_bg_target)
+
+def board_button_click(engine,button):
+    for loop_button in engine.board_buttons:
+        loop_button.selected = False
+    button.selected = True
+    engine.details_state = "button"
+
+def back_to_layer(engine,button):
+    engine.details_state = "layer"
+    for loop_button in engine.board_buttons:
+        loop_button.selected = False
