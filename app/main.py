@@ -88,6 +88,14 @@ class App(Engine):
         self.board_button_new_button = Button(self,[628,592],[610,96],add_macro,"new_macro","new_macro",flag=1)
         self.board_button_no_macro_text = Text(self,"no_macro",pygame.Rect(622,112,648,512),True)
 
+        self.macrotype_back_button = Button(self,[622,32],[128,48],back_to_button,"","back")
+        self.macrotype_button_view_text = Text(self,"macrotype",pygame.Rect(750,32,520,48),True)
+        self.macrotype_key_button = Button(self,[622,96],[128,128],back_to_layer,"","Key")
+        self.macrotype_text_button = Button(self,[766,96],[128,128],back_to_layer,"","Text")
+        self.macrotype_layer_button = Button(self,[910,96],[128,128],back_to_layer,"","Layer")
+        self.macrotype_mousebutton_button = Button(self,[622,240],[128,128],back_to_layer,"","Klick")
+        self.macrotype_mousepos_button = Button(self,[766,240],[128,128],back_to_layer,"","Pos")
+        self.macrotype_execapp_button = Button(self,[910,240],[128,128],back_to_layer,"",".EXE")
 
         self.board_button_selected = None
 
@@ -221,6 +229,15 @@ class App(Engine):
                 self.board_back_button.update()
                 self.board_button_name_input.update()
                 self.board_button_new_button.update()
+
+            if self.details_state == "macroselect":
+                self.macrotype_back_button.update()
+                self.macrotype_key_button.update()
+                self.macrotype_text_button.update()
+                self.macrotype_layer_button.update()
+                self.macrotype_mousebutton_button.update()
+                self.macrotype_mousepos_button.update()
+                self.macrotype_execapp_button.update()
     
     def draw(self):
         if self.app_state == "full_view":
@@ -263,6 +280,16 @@ class App(Engine):
                 self.board_button_new_button.draw()
                 if self.config[self.current_layer_selected]["keys"][self.board_button_selected] == None:
                     self.board_button_no_macro_text.draw()
+
+            if self.details_state == "macroselect":
+                self.macrotype_back_button.draw()
+                self.macrotype_key_button.draw()
+                self.macrotype_button_view_text.draw()
+                self.macrotype_text_button.draw()
+                self.macrotype_layer_button.draw()
+                self.macrotype_mousebutton_button.draw()
+                self.macrotype_mousepos_button.draw()
+                self.macrotype_execapp_button.draw()
 
             if self.select_overlay != None:
                 self.select_overlay.draw_select()
