@@ -114,7 +114,7 @@ class App(Engine):
                 "speed":0.5,
                 "color":[0,0,255],
                 "effect":"static",
-                "keys":{1:None,2:None,3:None,4:None,5:None,6:None,7:None,8:None,9:None,10:None,11:None,12:None,13:None,14:None,15:None,16:None,}
+                "keys":{"1":None,"2":None,"3":None,"4":None,"5":None,"6":None,"7":None,"8":None,"9":None,"10":None,"11":None,"12":None,"13":None,"14":None,"15":None,"16":None}
             }]
             self.save_manager.save("config",self.config)
 
