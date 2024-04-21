@@ -17,7 +17,11 @@
         "delete": "Löschen",
         "layer": "Ebene:",
         "language_id": "DE",
-        "back":"Zurück"
+        "back":"Zurück",
+        "buttonview":"Makrodetails:",
+        "new_macro": "Neues Makro",
+        "no_macro": "Noch kein Makro erstellt...",
+        "macrotype":"Macrotyp"
     },
     "en":{
         "":"",
@@ -37,6 +41,10 @@
         "delete": "Delete",
         "layer": "Layer:",
         "language_id": "EN",
-        "back":"Back"
+        "back":"Back",
+        "buttonview":"Buttondetails:",
+        "new_macro": "New Macro",
+        "no_macro": "No macro created yet...",
+        "macrotype":"Macrotype"
     }
 }
