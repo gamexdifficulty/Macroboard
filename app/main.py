@@ -63,22 +63,22 @@ class App(Engine):
         self.board_border = pygame.Rect(32,176,512,512)
         self.board_separator = pygame.Rect(576,32,16,656)
         self.board_buttons = [
-            Button(self,[57,201],[96,96],board_button_click,"1","ABC"),
-            Button(self,[178,201],[96,96],board_button_click,"2"),
-            Button(self,[299,201],[96,96],board_button_click,"3"),
-            Button(self,[420,201],[96,96],board_button_click,"4"),
-            Button(self,[57,322],[96,96],board_button_click,"5"),
-            Button(self,[178,322],[96,96],board_button_click,"6"),
-            Button(self,[299,322],[96,96],board_button_click,"7"),
-            Button(self,[420,322],[96,96],board_button_click,"8"),
-            Button(self,[57,443],[96,96],board_button_click,"9"),
-            Button(self,[178,443],[96,96],board_button_click,"10"),
-            Button(self,[299,443],[96,96],board_button_click,"11"),
-            Button(self,[420,443],[96,96],board_button_click,"12"),
-            Button(self,[57,567],[96,96],board_button_click,"13"),
-            Button(self,[178,567],[96,96],board_button_click,"14"),
-            Button(self,[299,567],[96,96],board_button_click,"15"),
-            Button(self,[420,567],[96,96],board_button_click,"16"),
+            Button(self,[57,201],[96,96],board_button_click,"1",""),
+            Button(self,[178,201],[96,96],board_button_click,"2",""),
+            Button(self,[299,201],[96,96],board_button_click,"3",""),
+            Button(self,[420,201],[96,96],board_button_click,"4",""),
+            Button(self,[57,322],[96,96],board_button_click,"5",""),
+            Button(self,[178,322],[96,96],board_button_click,"6",""),
+            Button(self,[299,322],[96,96],board_button_click,"7",""),
+            Button(self,[420,322],[96,96],board_button_click,"8",""),
+            Button(self,[57,443],[96,96],board_button_click,"9",""),
+            Button(self,[178,443],[96,96],board_button_click,"10",""),
+            Button(self,[299,443],[96,96],board_button_click,"11",""),
+            Button(self,[420,443],[96,96],board_button_click,"12",""),
+            Button(self,[57,567],[96,96],board_button_click,"13",""),
+            Button(self,[178,567],[96,96],board_button_click,"14",""),
+            Button(self,[299,567],[96,96],board_button_click,"15",""),
+            Button(self,[420,567],[96,96],board_button_click,"16",""),
         ]
 
         self.board_back_button = Button(self,[622,32],[128,48],back_to_layer,"","back")
