@@ -82,6 +82,14 @@ class App(Engine):
         ]
 
         self.board_back_button = Button(self,[622,32],[128,48],back_to_layer,"","back")
+        self.board_button_view = Text(self,"buttonview",pygame.Rect(750,32,520,48),True)
+        self.board_button_name_text = Text(self,"name",pygame.Rect(622,112,0,0),True)
+        self.board_button_name_input = Input(self,[814,104],[424,48],"ABC",change_button_name)
+        self.board_button_new_button = Button(self,[628,592],[610,96],add_macro,"new_macro","new_macro",flag=1)
+        self.board_button_no_macro_text = Text(self,"no_macro",pygame.Rect(622,112,648,512),True)
+
+
+        self.board_button_selected = None
 
         self.layer_lable = Text(self,"layer",pygame.Rect(96,32,448,48),True)
         self.layer_text = [
@@ -211,6 +219,8 @@ class App(Engine):
 
             if self.details_state == "button":
                 self.board_back_button.update()
+                self.board_button_name_input.update()
+                self.board_button_new_button.update()
     
     def draw(self):
         if self.app_state == "full_view":
@@ -247,6 +257,12 @@ class App(Engine):
 
             if self.details_state == "button":
                 self.board_back_button.draw()
+                self.board_button_view.draw()
+                self.board_button_name_text.draw()
+                self.board_button_name_input.draw()
+                self.board_button_new_button.draw()
+                if self.config[self.current_layer_selected]["keys"][self.board_button_selected] == None:
+                    self.board_button_no_macro_text.draw()
 
             if self.select_overlay != None:
                 self.select_overlay.draw_select()

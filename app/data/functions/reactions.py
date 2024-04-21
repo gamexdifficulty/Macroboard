@@ -114,6 +114,8 @@ def board_button_click(engine,button):
         loop_button.selected = False
     button.selected = True
     engine.details_state = "button"
+    engine.board_button_selected = button.id
+    engine.board_button_name_input.set_text(button.id)
 
 def back_to_layer(engine,button):
     engine.details_state = "layer"
