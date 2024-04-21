@@ -16,7 +16,8 @@
         "new_layer": "Neuer Layer",
         "delete": "Löschen",
         "layer": "Ebene:",
-        "language_id": "DE"
+        "language_id": "DE",
+        "back":"Zurück"
     },
     "en":{
         "":"",
@@ -35,6 +36,7 @@
         "new_layer": "New Layer",
         "delete": "Delete",
         "layer": "Layer:",
-        "language_id": "EN"
+        "language_id": "EN",
+        "back":"Back"
     }
 }
