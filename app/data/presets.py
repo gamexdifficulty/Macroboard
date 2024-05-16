@@ -1,4 +1,4 @@
-new_layer = [{
+new_layer = {
     "name":"Main",
     "bri":1.0,
     "speed":0.5,
@@ -22,4 +22,4 @@ new_layer = [{
         "15":{"name":"","macros":[]},
         "16":{"name":"","macros":[]}
     }
-}]
+}
