@@ -259,7 +259,7 @@ class App(Engine):
                 self.board_button_name_text.draw()
                 self.board_button_name_input.draw()
                 self.board_button_new_button.draw()
-                if self.config[self.current_layer_selected]["keys"][self.board_button_selected.id] == None:
+                if self.config[self.current_layer_selected]["keys"][self.board_button_selected.id]["macros"] == []:
                     self.board_button_no_macro_text.draw()
 
             if self.details_state == "macroselect":
