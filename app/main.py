@@ -1,12 +1,15 @@
 import json
 from engine_light import *
-from data.functions.reactions import *
+
+from data.presets import *
+
 from data.classes.button import *
 from data.classes.select import *
 from data.classes.slider import *
 from data.classes.color import *
 from data.classes.input import *
-import serial.tools.list_ports
+
+from data.functions.reactions import *
 
 class App(Engine):
     def __init__(self):
@@ -124,14 +127,7 @@ class App(Engine):
 
         self.config = self.save_manager.load("config",[])
         if self.config == []:
-            self.config = [{
-                "name":"MainTest",
-                "bri":1.0,
-                "speed":0.5,
-                "color":[0,0,255],
-                "effect":"static",
-                "keys":{"1":None,"2":None,"3":None,"4":None,"5":None,"6":None,"7":None,"8":None,"9":None,"10":None,"11":None,"12":None,"13":None,"14":None,"15":None,"16":None}
-            }]
+            self.config = new_layer.copy()
             self.save_manager.save("config",self.config)
 
         options = []
@@ -144,21 +140,6 @@ class App(Engine):
         self.pyserial = None
 
         self.i = 0
-
-        #while not self.serial_connected:
-        #    try:
-        #        macroport = "COM4"
-        #        ports = serial.tools.list_ports.comports()
-        #        for port, desc, hwid in sorted(ports):
-        #            if hwid.find("USB VID:PID=0001:0001") != -1:
-        #                macroport = port
-        #        self.pyserial = serial.Serial(macroport, 115200)
-        #    except Exception as e:
-        #        print(e)
-        #        time.sleep(3)
-        #    else:
-        #        self.serial_connected = True
-        #        print("connected")
 
         set_select_layer(self,self.current_layer_selected)
 
