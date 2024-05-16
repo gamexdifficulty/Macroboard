@@ -1,3 +1,5 @@
+from data.presets import *
+
 def switch_language(engine,button):
     index = engine.text_language_options.index(engine.text_language)+1
     if index > len(engine.text_language_options)-1:
@@ -58,14 +60,9 @@ def change_effect_speed(engine,percentage):
 ##########################################################################################
 
 def add_layer(engine,button):
-    engine.config.append({
-        "name":engine.translate("new_layer"),
-        "bri":1.0,
-        "speed":0.5,
-        "color":[0,0,255],
-        "effect":"static",
-        "keys":{"1":None,"2":None,"3":None,"4":None,"5":None,"6":None,"7":None,"8":None,"9":None,"10":None,"11":None,"12":None,"13":None,"14":None,"15":None,"16":None}
-    })
+    layer = new_layer.copy()
+    layer["name"] = engine.translate("new_layer")
+    engine.config.append(layer)
 
     engine.save_manager.save("config",engine.config)
 
@@ -108,9 +105,9 @@ def set_select_layer(engine,index:int):
     engine.layer_effect_type_select.set_selected(engine.config[index]["effect"])
 
     engine.select_layer.set_selected(engine.config[index]["name"])
-    keylist = list(engine.config[engine.current_layer_selected]["keys"].keys())
+    keylist = engine.config[engine.current_layer_selected]["keys"]
     for i,button in enumerate(engine.board_buttons):
-        engine.board_buttons[i].text.text_id = keylist[i]
+        engine.board_buttons[i].text.text_id = keylist[str(i+1)]["name"]
         engine.board_buttons[i].text.check()
 
 def board_button_click(engine,button):
@@ -138,11 +135,8 @@ def back_to_button(engine,button):
 
 def change_button_name(engine,name):
     if name != "":
-            button_index = engine.board_buttons.index(engine.board_button_selected)
-            button_key = engine.board_buttons[button_index].text.text_id
-            button_config = engine.config[engine.current_layer_selected]["keys"][button_key]
-            del engine.config[engine.current_layer_selected]["keys"][button_key]
-            engine.config[engine.current_layer_selected]["keys"][name] = button_config
-            engine.board_buttons[button_index].text.text_id = name
-            engine.board_buttons[button_index].text.check()
-            engine.board_buttons[button_index].id = name
+        button_index = engine.board_buttons.index(engine.board_button_selected)
+        engine.config[engine.current_layer_selected]["keys"][str(button_index+1)]["name"] = name
+        engine.board_buttons[button_index].text.text_id = name
+        engine.board_buttons[button_index].text.check()
+        engine.save_manager.save("config",engine.config)
