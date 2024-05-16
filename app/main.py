@@ -127,7 +127,7 @@ class App(Engine):
 
         self.config = self.save_manager.load("config",[])
         if self.config == []:
-            self.config = new_layer.copy()
+            self.config = [new_layer.copy()]
             self.save_manager.save("config",self.config)
 
         options = []
