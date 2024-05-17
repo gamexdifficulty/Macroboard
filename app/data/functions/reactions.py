@@ -137,9 +137,8 @@ def back_to_button(engine,button):
     engine.details_state = "button"
 
 def change_button_name(engine,name):
-    if name != "":
-        button_index = engine.board_buttons.index(engine.board_button_selected)
-        engine.config[engine.current_layer_selected]["keys"][str(button_index+1)]["name"] = name
-        engine.board_buttons[button_index].text.text_id = name
-        engine.board_buttons[button_index].text.check()
-        engine.save_manager.save("config",engine.config)
+    button_index = engine.board_buttons.index(engine.board_button_selected)
+    engine.config[engine.current_layer_selected]["keys"][str(button_index+1)]["name"] = name
+    engine.board_buttons[button_index].text.text_id = name
+    engine.board_buttons[button_index].text.check()
+    engine.save_manager.save("config",engine.config)
