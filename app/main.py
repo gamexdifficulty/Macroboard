@@ -169,15 +169,16 @@ class App(Engine):
                 text_input.reposition()
 
     def event_keydown(self, key: int, unicode: str):
-        if key == KEY_BACKSPACE[0] and self.input_current.text_position != 0:
-            self.input_text = self.input_text[:self.input_current.text_position-1] + self.input_text[self.input_current.text_position:]
-            self.input_current.text_position = max(self.input_current.text_position-1,0)
-        if key == KEY_DELETE[0] and self.input_current.text_position != len(self.input_current.text.letter_rects):
-            self.input_text = self.input_text[:self.input_current.text_position] + self.input_text[self.input_current.text_position+1:]
-        elif unicode.isalpha() or unicode.isalnum() or key == KEY_SPACE[0]:
-            if len(self.input_text) < self.input_max_length and self.input_current:
-                self.input_text = self.input_text[:self.input_current.text_position] + unicode + self.input_text[self.input_current.text_position:]
-                self.input_current.text_position += 1
+        if self.input_current != None:
+            if key == KEY_BACKSPACE[0] and self.input_current.text_position != 0:
+                self.input_text = self.input_text[:self.input_current.text_position-1] + self.input_text[self.input_current.text_position:]
+                self.input_current.text_position = max(self.input_current.text_position-1,0)
+            if key == KEY_DELETE[0] and self.input_current.text_position != len(self.input_current.text.letter_rects):
+                self.input_text = self.input_text[:self.input_current.text_position] + self.input_text[self.input_current.text_position+1:]
+            elif unicode.isalpha() or unicode.isalnum() or key == KEY_SPACE[0]:
+                if len(self.input_text) < self.input_max_length and self.input_current:
+                    self.input_text = self.input_text[:self.input_current.text_position] + unicode + self.input_text[self.input_current.text_position:]
+                    self.input_current.text_position += 1
 
         if key == KEY_ARROW_LEFT[0]:
             if self.input_current:
