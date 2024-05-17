@@ -21,7 +21,8 @@
         "buttonview":"Makrodetails:",
         "new_macro": "Neues Makro",
         "no_macro": "Noch kein Makro erstellt...",
-        "macrotype":"Macrotyp"
+        "macrotype":"Macrotyp",
+        "save_macro":"Macro Speichern" 
     },
     "en":{
         "":"",
@@ -45,6 +46,7 @@
         "buttonview":"Buttondetails:",
         "new_macro": "New Macro",
         "no_macro": "No macro created yet...",
-        "macrotype":"Macrotype"
+        "macrotype":"Macrotype",
+        "save_macro":"Save Macro"
     }
 }
