@@ -111,8 +111,11 @@ def set_select_layer(engine,index:int):
         engine.board_buttons[i].text.check()
 
 def board_button_click(engine,button):
+    engine.details_state = "button"
     for loop_button in engine.board_buttons:
         loop_button.selected = False
+    for loop_input in engine.inputs:
+        loop_input.selected = False
     button.selected = True
     engine.board_button_name_input.set_text(engine.config[engine.current_layer_selected]["keys"][str(button.id)]["name"])
     engine.board_button_selected = button
