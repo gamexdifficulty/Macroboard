@@ -23,3 +23,5 @@ new_layer = {
         "16":{"name":"","macros":[]}
     }
 }
+
+new_macro = {"type":None,"trigger":"click","data":[]}
