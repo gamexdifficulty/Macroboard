@@ -93,12 +93,20 @@ class App(Engine):
 
         self.macrotype_back_button = Button(self,[622,32],[128,48],back_to_button,"","back")
         self.macrotype_button_view_text = Text(self,"macrotype",pygame.Rect(750,32,520,48),True)
-        self.macrotype_key_button = Button(self,[622,96],[128,128],back_to_layer,"","Key")
-        self.macrotype_text_button = Button(self,[766,96],[128,128],back_to_layer,"","Text")
-        self.macrotype_layer_button = Button(self,[910,96],[128,128],back_to_layer,"","Layer")
-        self.macrotype_mousebutton_button = Button(self,[622,240],[128,128],back_to_layer,"","Klick")
-        self.macrotype_mousepos_button = Button(self,[766,240],[128,128],back_to_layer,"","Pos")
-        self.macrotype_execapp_button = Button(self,[910,240],[128,128],back_to_layer,"",".EXE")
+        self.macrotype_key_button = Button(self,[622,96],[128,128],macro_key,"","Key")
+        self.macrotype_text_button = Button(self,[766,96],[128,128],macro_text,"","Text")
+        self.macrotype_layer_button = Button(self,[910,96],[128,128],macro_layer,"","Layer")
+        self.macrotype_mousebutton_button = Button(self,[622,240],[128,128],macro_button,"","Klick")
+        self.macrotype_mousepos_button = Button(self,[766,240],[128,128],macro_pos,"","Pos")
+        self.macrotype_execapp_button = Button(self,[910,240],[128,128],macro_exe,"",".EXE")
+
+        self.back_to_macrotype_button = Button(self,[622,32],[128,48],back_to_macrotype,"","back")
+        self.macro_create_key_button = Button(self,[628,592],[610,96],create_key_macro,"create_key_macro","save_macro",flag=1)
+        self.macro_create_text_button = Button(self,[628,592],[610,96],create_text_macro,"create_text_macro","save_macro",flag=1)
+        self.macro_create_layer_button = Button(self,[628,592],[610,96],create_layer_macro,"create_layer_macro","save_macro",flag=1)
+        self.macro_create_button_button = Button(self,[628,592],[610,96],create_button_macro,"create_button_macro","save_macro",flag=1)
+        self.macro_create_pos_button = Button(self,[628,592],[610,96],create_pos_macro,"create_pos_macro","save_macro",flag=1)
+        self.macro_create_exe_button = Button(self,[628,592],[610,96],create_exe_macro,"create_exe_macro","save_macro",flag=1)
 
         self.board_button_selected = None
 
@@ -220,7 +228,31 @@ class App(Engine):
                 self.macrotype_mousebutton_button.update()
                 self.macrotype_mousepos_button.update()
                 self.macrotype_execapp_button.update()
-    
+
+            if self.details_state == "macrokey":
+                self.back_to_macrotype_button.update()
+                self.macro_create_key_button.update()
+
+            if self.details_state == "macrotext":
+                self.back_to_macrotype_button.update()
+                self.macro_create_text_button.update()
+
+            if self.details_state == "macrolayer":
+                self.back_to_macrotype_button.update()
+                self.macro_create_layer_button.update()
+
+            if self.details_state == "macrobutton":
+                self.back_to_macrotype_button.update()
+                self.macro_create_button_button.update()
+
+            if self.details_state == "macropos":
+                self.back_to_macrotype_button.update()
+                self.macro_create_pos_button.update()
+
+            if self.details_state == "macroexe":
+                self.back_to_macrotype_button.update()
+                self.macro_create_exe_button.update()
+
     def draw(self):
         if self.app_state == "full_view":
             self.window.fill(self.color_bg)
@@ -272,6 +304,30 @@ class App(Engine):
                 self.macrotype_mousebutton_button.draw()
                 self.macrotype_mousepos_button.draw()
                 self.macrotype_execapp_button.draw()
+
+            if self.details_state == "macrokey":
+                self.back_to_macrotype_button.draw()
+                self.macro_create_key_button.draw()
+
+            if self.details_state == "macrotext":
+                self.back_to_macrotype_button.draw()
+                self.macro_create_text_button.draw()
+
+            if self.details_state == "macrolayer":
+                self.back_to_macrotype_button.draw()
+                self.macro_create_layer_button.draw()
+
+            if self.details_state == "macrobutton":
+                self.back_to_macrotype_button.draw()
+                self.macro_create_button_button.draw()
+
+            if self.details_state == "macropos":
+                self.back_to_macrotype_button.draw()
+                self.macro_create_pos_button.draw()
+
+            if self.details_state == "macroexe":
+                self.back_to_macrotype_button.draw()
+                self.macro_create_exe_button.draw()
 
             if self.select_overlay != None:
                 self.select_overlay.draw_select()

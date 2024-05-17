@@ -142,3 +142,46 @@ def change_button_name(engine,name):
     engine.board_buttons[button_index].text.text_id = name
     engine.board_buttons[button_index].text.check()
     engine.save_manager.save("config",engine.config)
+
+###########################################################################################
+
+def back_to_macrotype(engine,button):
+    engine.details_state = "macroselect"
+
+def macro_key(engine,button):
+    engine.details_state = "macrokey"
+
+def macro_text(engine,button):
+    engine.details_state = "macrotext"
+
+def macro_layer(engine,button):
+    engine.details_state = "macrolayer"
+
+def macro_button(engine,button):
+    engine.details_state = "macrobutton"
+
+def macro_pos(engine,button):
+    engine.details_state = "macropos"
+
+def macro_exe(engine,button):
+    engine.details_state = "macroexe"
+
+##############################################################################################
+
+def create_key_macro(engine,button):
+    engine.details_state = "button"
+
+def create_text_macro(engine,button):
+    engine.details_state = "button"
+
+def create_layer_macro(engine,button):
+    engine.details_state = "button"
+
+def create_button_macro(engine,button):
+    engine.details_state = "button"
+
+def create_pos_macro(engine,button):
+    engine.details_state = "button"
+
+def create_exe_macro(engine,button):
+    engine.details_state = "button"
