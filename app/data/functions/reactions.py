@@ -114,7 +114,7 @@ def board_button_click(engine,button):
     for loop_button in engine.board_buttons:
         loop_button.selected = False
     button.selected = True
-    engine.details_state = "button"
+    engine.board_button_name_input.set_text(engine.config[engine.current_layer_selected]["keys"][str(button.id)]["name"])
     engine.board_button_selected = button
     engine.board_button_name_input.set_text(button.id)
 
