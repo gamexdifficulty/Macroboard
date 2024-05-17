@@ -119,7 +119,6 @@ def board_button_click(engine,button):
     button.selected = True
     engine.board_button_name_input.set_text(engine.config[engine.current_layer_selected]["keys"][str(button.id)]["name"])
     engine.board_button_selected = button
-    engine.board_button_name_input.set_text(button.id)
 
 ##########################################################################################
 
