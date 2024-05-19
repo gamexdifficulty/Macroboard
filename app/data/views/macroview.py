@@ -15,7 +15,9 @@ class MacroView:
         self.index_text = Text(self.engine,str(self.index)+".",pygame.Rect(630,128+72*index-1,48,64),True,False)
         self.delete_button = Button(self.engine,[630+64+512+32-64,128+72*self.index-1],[64,64],delete_macro,index,flag=2)
         self.delete_sprite = pygame.image.load(os.path.join("data","sprites","delete.png")).convert_alpha()
+        self.type_sprite = self.engine.typeicon_sprites[self.type]
         self.drag_rect = pygame.Rect(630+64+512+32-64-64-8,128+72*index-1,64,64)
+        self.drag_sprite = pygame.image.load(os.path.join("data","sprites","move.png")).convert_alpha()
         if self.type == 0:
             self.previewtext = Text(self.engine,engine.translate("key_combinations")+" "+str(len(self.data)),pygame.Rect(630+160,128+72*index-1,256,64),translate=False)
 
@@ -27,9 +29,9 @@ class MacroView:
     def draw(self):
         self.index_text.draw()
         pygame.draw.rect(self.engine.window.main_surface,self.engine.color_element,self.rect,border_radius=8)
-        self.type_text.draw()
+        self.engine.window.render(self.type_sprite,(630+64+8,128+72*self.index-1))
         self.previewtext.draw()
-        pygame.draw.rect(self.engine.window.main_surface,self.engine.color_highlight,self.drag_rect,4,8)
+        self.engine.window.render(self.drag_sprite,(self.drag_rect.x,self.drag_rect.y))
         self.delete_button.draw()
         self.engine.window.render(self.delete_sprite,(630+64+512+32-64,128+72*self.index-1))
         if self.rect.collidepoint(self.engine.input.mouse.get_pos()):
