@@ -1,4 +1,8 @@
+import os,json,pygame
+import data.classes
 from data.presets import *
+from data.classes.text import Text
+import data.views.macroview as macroview
 
 def switch_language(engine,button):
     index = engine.text_language_options.index(engine.text_language)+1

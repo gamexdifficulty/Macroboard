@@ -8,6 +8,7 @@ from data.classes.select import *
 from data.classes.slider import *
 from data.classes.color import *
 from data.classes.input import *
+from data.views.macroview import *
 
 from data.functions.reactions import *
 
@@ -52,6 +53,7 @@ class App(Engine):
         self.colors = []
         self.inputs = []
         self.texts = []
+        self.macro_views = []
 
         self.window_offset = [0,0]
 
@@ -154,6 +156,9 @@ class App(Engine):
 
         self.select_layer.set_options(options)
         set_select_layer(self,self.current_layer_selected)
+
+        self.edit_macro = False
+        self.edit_macro_index = 0
 
         self.pressed_keys = []
         self.pressed_keys_focused = False
