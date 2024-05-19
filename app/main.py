@@ -153,12 +153,6 @@ class App(Engine):
             options.append(config["name"])
 
         self.select_layer.set_options(options)
-
-        self.serial_connected = False
-        self.pyserial = None
-
-        self.i = 0
-
         set_select_layer(self,self.current_layer_selected)
 
         self.pressed_keys = []
