@@ -1,4 +1,5 @@
 import os
+import json
 import pygame
 from data.classes.text import Text
 from data.classes.button import Button
@@ -19,7 +20,32 @@ class MacroView:
         self.drag_rect = pygame.Rect(630+64+512+32-64-64-8,128+72*index-1,64,64)
         self.drag_sprite = pygame.image.load(os.path.join("data","sprites","move.png")).convert_alpha()
         if self.type == 0:
-            self.previewtext = Text(self.engine,engine.translate("key_combinations")+" "+str(len(self.data)),pygame.Rect(630+160,128+72*index-1,256,64),translate=False)
+            keytext = ""
+            for key in config["data"]:
+                text = ""
+                if key <= 0x10ffff:
+                    if not chr(key).isspace():
+                        text = chr(key)
+                    else:
+                        text = pygame.key.name(key)
+                else:
+                    text = pygame.key.name(key)
+
+                if text.isspace() or text == "":
+                    with open(os.path.join("data","keycodes.json"),"r+",encoding="UTF-8") as f:
+                        keycodes = json.load(f)
+                        if str(key) not in keycodes:
+                            text = "???"
+                        else:
+                            text = keycodes[str(key)]
+
+                if keytext != "":
+                    text = " + "+text
+
+                keytext += text
+            if len(keytext) > 32:
+                keytext = keytext[:32]+"..."
+            self.previewtext = Text(self.engine,keytext,pygame.Rect(630+160+16,128+72*index-1,256,64),translate=False)
 
     def update(self):
         self.delete_button.update()
