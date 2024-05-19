@@ -22,7 +22,16 @@
         "new_macro": "Neues Makro",
         "no_macro": "Noch kein Makro erstellt...",
         "macrotype":"Macrotyp",
-        "save_macro":"Macro Speichern" 
+        "save_macro":"Macro Speichern",
+        "key_macro":"Tasten Macro",
+        "clicked":"Gedrückt",
+        "pressed":"Gehalten",
+        "released":"Losgelassen",
+        "execute_on":"Start durch:",
+        "key_combination":"Tastenkombination:",
+        "key_combinations":"Tastenkombinationen:",
+        "presskeycombination":"Drücke eine Tastenkombination...",
+        "empty_keys": "Zurücksetzen"
     },
     "en":{
         "":"",
@@ -47,6 +56,15 @@
         "new_macro": "New Macro",
         "no_macro": "No macro created yet...",
         "macrotype":"Macrotype",
-        "save_macro":"Save Macro"
+        "save_macro":"Save Macro",
+        "key_macro":"Key Macro",
+        "clicked":"Clicked",
+        "pressed":"Pressed",
+        "released":"Released",
+        "execute_on":"Execute on:",
+        "key_combination":"Keycombination:",
+        "key_combinations":"Keycombinations:",
+        "presskeycombination":"Press a Keycombination...",
+        "empty_keys": "Empty"
     }
 }
