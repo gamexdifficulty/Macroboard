@@ -95,12 +95,14 @@ class App(Engine):
 
         self.macrotype_back_button = Button(self,[622,32],[128,48],back_to_button,"","back")
         self.macrotype_button_view_text = Text(self,"macrotype",pygame.Rect(750,32,520,48),True)
-        self.macrotype_key_button = Button(self,[622,96],[128,128],macro_key,"","Key")
-        self.macrotype_text_button = Button(self,[766,96],[128,128],macro_text,"","Text")
-        self.macrotype_layer_button = Button(self,[910,96],[128,128],macro_layer,"","Layer")
-        self.macrotype_mousebutton_button = Button(self,[622,240],[128,128],macro_button,"","Klick")
-        self.macrotype_mousepos_button = Button(self,[766,240],[128,128],macro_pos,"","Pos")
-        self.macrotype_execapp_button = Button(self,[910,240],[128,128],macro_exe,"",".EXE")
+        self.typeicon_sprites = [
+            pygame.image.load(os.path.join("data","sprites","key.png")).convert_alpha(),
+            pygame.image.load(os.path.join("data","sprites","text.png")).convert_alpha(),
+            pygame.image.load(os.path.join("data","sprites","layer.png")).convert_alpha(),
+            pygame.image.load(os.path.join("data","sprites","mouse.png")).convert_alpha(),
+            pygame.image.load(os.path.join("data","sprites","key.png")).convert_alpha(),
+            pygame.image.load(os.path.join("data","sprites","app.png")).convert_alpha()
+        ]
 
         self.back_to_macrotype_button = Button(self,[622,32],[128,48],back_to_macrotype,"","back")
 
