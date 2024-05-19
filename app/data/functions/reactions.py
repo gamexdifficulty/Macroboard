@@ -149,6 +149,9 @@ def back_to_macrotype(engine,button):
 
 def macro_key(engine,button):
     engine.details_state = "macrokey"
+    engine.macro_create_key_type_select.set_selected("clicked")
+    engine.pressed_keys = []
+    engine.macro_create_key_input_text = Text(engine,"",engine.macro_create_keys_background,False)
 
 def macro_text(engine,button):
     engine.details_state = "macrotext"
