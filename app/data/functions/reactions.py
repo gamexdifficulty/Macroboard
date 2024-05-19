@@ -145,7 +145,11 @@ def change_button_name(engine,name):
 ###########################################################################################
 
 def back_to_macrotype(engine,button):
-    engine.details_state = "macroselect"
+    if engine.edit_macro:
+        engine.details_state = "button"
+    else:
+        engine.details_state = "macroselect"
+    engine.edit_macro = False
 
 def macro_key(engine,button):
     engine.details_state = "macrokey"
