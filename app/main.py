@@ -256,6 +256,8 @@ class App(Engine):
                 self.board_back_button.update()
                 self.board_button_name_input.update()
                 self.board_button_new_button.update()
+                for view in self.macro_views:
+                    view.update()
 
             if self.details_state == "macroselect":
                 self.macrotype_back_button.update()
@@ -337,6 +339,9 @@ class App(Engine):
                 self.board_button_new_button.draw()
                 if self.config[self.current_layer_selected]["keys"][self.board_button_selected.id]["macros"] == []:
                     self.board_button_no_macro_text.draw()
+
+                for view in self.macro_views:
+                    view.draw()
 
             if self.details_state == "macroselect":
                 self.macrotype_back_button.draw()
