@@ -101,7 +101,17 @@ class App(Engine):
         self.macrotype_execapp_button = Button(self,[910,240],[128,128],macro_exe,"",".EXE")
 
         self.back_to_macrotype_button = Button(self,[622,32],[128,48],back_to_macrotype,"","back")
-        self.macro_create_key_button = Button(self,[628,592],[610,96],create_key_macro,"create_key_macro","save_macro",flag=1)
+
+        self.macro_create_key_text = Text(self,"key_macro",pygame.Rect(750,32,520,48),True)
+        self.macro_create_key_type_text = Text(self,"execute_on",pygame.Rect(628,136,0,0),True)
+        self.macro_create_key_type_select = Select(self,[814,128],[424,48],change_effect_type,["clicked","pressed","released"])
+        self.macro_create_key_combination_text = Text(self,"key_combination",pygame.Rect(628,176+32,512+96,48),True)
+        self.macro_create_key_press_combination_text = Text(self,"presskeycombination",pygame.Rect(628,176+96,512+96,512-128-96),False)
+        self.macro_create_keys_background = pygame.Rect(628,176+96,512+96,512-128-96)
+        self.macro_create_key_input_text = Text(self,"",pygame.Rect(628,176+96,512+96,512-128-96),False)
+        self.macro_create_key_button = Button(self,[628,592],[288,96],create_key_macro,"create_key_macro","save",flag=1)
+        self.macro_empty_key_combination_button = Button(self,[950,592],[288,96],empty_keys,"empty_keys","empty_keys",flag=2)
+
         self.macro_create_text_button = Button(self,[628,592],[610,96],create_text_macro,"create_text_macro","save_macro",flag=1)
         self.macro_create_layer_button = Button(self,[628,592],[610,96],create_layer_macro,"create_layer_macro","save_macro",flag=1)
         self.macro_create_button_button = Button(self,[628,592],[610,96],create_button_macro,"create_button_macro","save_macro",flag=1)
@@ -150,6 +160,9 @@ class App(Engine):
         self.i = 0
 
         set_select_layer(self,self.current_layer_selected)
+
+        self.pressed_keys = []
+        self.pressed_keys_focused = False
 
     def event_window_resize(self, size: list[int]):
         if self.app_state == "full_view":
@@ -231,8 +244,14 @@ class App(Engine):
 
             if self.details_state == "macrokey":
                 self.back_to_macrotype_button.update()
+                self.macro_empty_key_combination_button.update()
                 self.macro_create_key_button.update()
-
+                self.macro_create_key_type_select.update()
+                if self.input.get("accept"):
+                    if self.macro_create_keys_background.collidepoint(self.input.mouse.get_pos()):
+                        self.pressed_keys_focused = True
+                    else:
+                        self.pressed_keys_focused = False
             if self.details_state == "macrotext":
                 self.back_to_macrotype_button.update()
                 self.macro_create_text_button.update()
@@ -308,6 +327,18 @@ class App(Engine):
             if self.details_state == "macrokey":
                 self.back_to_macrotype_button.draw()
                 self.macro_create_key_button.draw()
+                self.macro_create_key_text.draw()
+                self.macro_create_key_type_select.draw()
+                self.macro_create_key_type_text.draw()
+                pygame.draw.rect(self.window.main_surface,self.color_element,self.macro_create_keys_background,border_radius=8)
+                if self.pressed_keys_focused:
+                    pygame.draw.rect(self.window.main_surface,self.color_highlight,self.macro_create_keys_background,width=4,border_radius=8)
+                self.macro_create_key_combination_text.draw()
+                if self.pressed_keys == []:
+                    self.macro_create_key_press_combination_text.draw()
+                else:
+                    self.macro_create_key_input_text.draw()
+                self.macro_empty_key_combination_button.draw()
 
             if self.details_state == "macrotext":
                 self.back_to_macrotype_button.draw()
