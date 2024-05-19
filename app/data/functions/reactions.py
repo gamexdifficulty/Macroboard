@@ -123,6 +123,7 @@ def board_button_click(engine,button):
     button.selected = True
     engine.board_button_name_input.set_text(engine.config[engine.current_layer_selected]["keys"][str(button.id)]["name"])
     engine.board_button_selected = button
+    refresh_macro_views(engine)
 
 ##########################################################################################
 
@@ -178,6 +179,11 @@ def macro_exe(engine,button):
 
 ##############################################################################################
 
+def refresh_macro_views(engine):
+    engine.macro_views = []
+    for i,macro in enumerate(engine.config[engine.current_layer_selected]["keys"][engine.board_button_selected.id]["macros"]):
+        engine.macro_views.append(macroview.MacroView(engine,i+1,macro))
+
 def create_key_macro(engine,button):
     macro = new_macro.copy()
     macro["type"] = 0
@@ -191,6 +197,7 @@ def create_key_macro(engine,button):
     engine.save_manager.save("config",engine.config)
     engine.details_state = "button"
     engine.edit_macro = False
+    refresh_macro_views(engine)
 
 def empty_keys(engine,button):
     engine.pressed_keys = []
