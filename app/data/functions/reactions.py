@@ -223,3 +223,32 @@ def delete_macro(engine,button):
     engine.save_manager.save("config",engine.config)
     refresh_macro_views(engine)
 
+def edit_macro_key(engine,config,index):
+    engine.edit_macro = True
+    engine.edit_macro_index = index-1
+    engine.details_state = "macrokey"
+    engine.macro_create_key_type_select.set_selected(["clicked","pressed","released"][config["trigger"]])
+    engine.pressed_keys = config["data"]
+    engine.macro_create_key_input_text = Text(engine,"",engine.macro_create_keys_background,False)
+    for key in config["data"]:
+        text = ""
+        if key <= 0x10ffff:
+            if not chr(key).isspace():
+                text = chr(key)
+            else:
+                text = pygame.key.name(key)
+        else:
+            text = pygame.key.name(key)
+
+        if text.isspace() or text == "":
+            with open(os.path.join("data","keycodes.json"),"r+",encoding="UTF-8") as f:
+                keycodes = json.load(f)
+                if str(key) not in keycodes:
+                    text = "???"
+                else:
+                    text = keycodes[str(key)]
+
+        if engine.macro_create_key_input_text.text_id != "":
+            text = " + "+text
+
+        engine.macro_create_key_input_text = Text(engine,engine.macro_create_key_input_text.text_id+text,engine.macro_create_keys_background,False)
