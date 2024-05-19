@@ -181,6 +181,10 @@ def create_key_macro(engine,button):
     engine.details_state = "button"
     engine.edit_macro = False
 
+def empty_keys(engine,button):
+    engine.pressed_keys = []
+    engine.macro_create_key_input_text = Text(engine,"",engine.macro_create_keys_background,False)
+
 def create_text_macro(engine,button):
     engine.details_state = "button"
 
