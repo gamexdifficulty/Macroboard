@@ -217,3 +217,9 @@ def create_pos_macro(engine,button):
 
 def create_exe_macro(engine,button):
     engine.details_state = "button"
+
+def delete_macro(engine,button):
+    engine.config[engine.current_layer_selected]["keys"][engine.board_button_selected.id]["macros"].pop(button.id-1)
+    engine.save_manager.save("config",engine.config)
+    refresh_macro_views(engine)
+
