@@ -95,6 +95,19 @@ class App(Engine):
 
         self.macrotype_back_button = Button(self,[622,32],[128,48],back_to_button,"","back")
         self.macrotype_button_view_text = Text(self,"macrotype",pygame.Rect(750,32,520,48),True)
+        self.macrotype_key_button = Button(self,[622,184],[299,128],macro_key,"")
+        self.macrotype_key_text = Text(self,"key_combinations",pygame.Rect(622,248,299,64))
+        self.macrotype_text_button = Button(self,[937,184],[299,128],macro_text,"")
+        self.macrotype_text_text = Text(self,"text_input",pygame.Rect(937,248,299,64))
+        self.macrotype_layer_button = Button(self,[622,328],[299,128],macro_layer,"")
+        self.macrotype_layer_text = Text(self,"layer_change",pygame.Rect(622,392,299,64))
+        self.macrotype_mousebutton_button = Button(self,[937,328],[299,128],macro_button,"")
+        self.macrotype_mousebutton_text = Text(self,"mouse_button",pygame.Rect(937,392,299,64))
+        self.macrotype_mousepos_button = Button(self,[622,472],[299,128],macro_pos,"")
+        self.macrotype_mousepos_text = Text(self,"mouse_movement",pygame.Rect(622,538,299,64))
+        self.macrotype_execapp_button = Button(self,[937,472],[299,128],macro_exe,"")
+        self.macrotype_execapp_text = Text(self,"app_execution",pygame.Rect(937,538,299,64))
+
         self.typeicon_sprites = [
             pygame.image.load(os.path.join("data","sprites","key.png")).convert_alpha(),
             pygame.image.load(os.path.join("data","sprites","text.png")).convert_alpha(),
@@ -347,13 +360,25 @@ class App(Engine):
 
             if self.details_state == "macroselect":
                 self.macrotype_back_button.draw()
-                self.macrotype_key_button.draw()
                 self.macrotype_button_view_text.draw()
+                self.macrotype_key_button.draw()
+                self.window.render(self.typeicon_sprites[0],(739,200))
+                self.macrotype_key_text.draw()
                 self.macrotype_text_button.draw()
+                self.window.render(self.typeicon_sprites[1],(1054,200))
+                self.macrotype_text_text.draw()
                 self.macrotype_layer_button.draw()
+                self.window.render(self.typeicon_sprites[2],(739,344))
+                self.macrotype_layer_text.draw()
                 self.macrotype_mousebutton_button.draw()
+                self.window.render(self.typeicon_sprites[3],(1054,344))
+                self.macrotype_mousebutton_text.draw()
                 self.macrotype_mousepos_button.draw()
+                self.window.render(self.typeicon_sprites[4],(739,488))
+                self.macrotype_mousepos_text.draw()
                 self.macrotype_execapp_button.draw()
+                self.window.render(self.typeicon_sprites[5],(1054,488))
+                self.macrotype_execapp_text.draw()
 
             if self.details_state == "macrokey":
                 self.back_to_macrotype_button.draw()
