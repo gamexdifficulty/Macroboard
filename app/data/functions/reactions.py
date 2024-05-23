@@ -185,19 +185,20 @@ def refresh_macro_views(engine):
         engine.macro_views.append(macroview.MacroView(engine,i+1,macro))
 
 def create_key_macro(engine,button):
-    macro = new_macro.copy()
-    macro["type"] = 0
-    macro["trigger"] = engine.macro_create_key_type_select.selected
-    macro["data"] = engine.pressed_keys
-    button_index = engine.board_buttons.index(engine.board_button_selected)
-    if engine.edit_macro:
-        engine.config[engine.current_layer_selected]["keys"][str(button_index+1)]["macros"][engine.edit_macro_index] = macro
-    else:
-        engine.config[engine.current_layer_selected]["keys"][str(button_index+1)]["macros"].append(macro)
-    engine.save_manager.save("config",engine.config)
-    engine.details_state = "button"
-    engine.edit_macro = False
-    refresh_macro_views(engine)
+    if engine.pressed_keys != []:
+        macro = new_macro.copy()
+        macro["type"] = 0
+        macro["trigger"] = engine.macro_create_key_type_select.selected
+        macro["data"] = engine.pressed_keys
+        button_index = engine.board_buttons.index(engine.board_button_selected)
+        if engine.edit_macro:
+            engine.config[engine.current_layer_selected]["keys"][str(button_index+1)]["macros"][engine.edit_macro_index] = macro
+        else:
+            engine.config[engine.current_layer_selected]["keys"][str(button_index+1)]["macros"].append(macro)
+        engine.save_manager.save("config",engine.config)
+        engine.details_state = "button"
+        engine.edit_macro = False
+        refresh_macro_views(engine)
 
 def empty_keys(engine,button):
     engine.pressed_keys = []
