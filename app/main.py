@@ -203,6 +203,9 @@ class App(Engine):
             for text_input in self.inputs:
                 text_input.reposition()
 
+            for view in self.macro_views:
+                view.reposition()
+
     def event_keydown(self, key: int, unicode: str):
         if self.details_state == "macrokey" and self.pressed_keys_focused:
             if key not in self.pressed_keys:

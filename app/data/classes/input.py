@@ -23,6 +23,8 @@ class Input:
 
         self.engine.inputs.append(self)
 
+        self.reposition()
+
     def reposition(self):
         self.rect = pygame.Rect(self.pos[0]+self.engine.window_offset[0],self.pos[1]+self.engine.window_offset[1],self.size[0],self.size[1])
         self.rect_small = pygame.Rect(self.rect.x+4,self.rect.y+4,self.rect.w-8,self.rect.h-8)
@@ -30,6 +32,7 @@ class Input:
 
     def set_text(self,text):
         self.text = Text(self.engine,text,pygame.Rect(self.rect.x,self.rect.y,self.rect.w,self.rect.h))
+        self.reposition()
 
     def update(self):
         if self.engine.input.get("accept"):

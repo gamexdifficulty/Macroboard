@@ -23,6 +23,7 @@ class Text:
 
         self.engine.texts.append(self)
         self.create_letter_rects()
+        self.reposition()
 
     def reposition(self):
         if self.rect.w != 0 and self.rect.h != 0:
