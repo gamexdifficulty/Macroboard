@@ -113,7 +113,7 @@ class App(Engine):
             pygame.image.load(os.path.join("data","sprites","text.png")).convert_alpha(),
             pygame.image.load(os.path.join("data","sprites","layer.png")).convert_alpha(),
             pygame.image.load(os.path.join("data","sprites","mouse.png")).convert_alpha(),
-            pygame.image.load(os.path.join("data","sprites","key.png")).convert_alpha(),
+            pygame.image.load(os.path.join("data","sprites","mouse_move.png")).convert_alpha(),
             pygame.image.load(os.path.join("data","sprites","app.png")).convert_alpha()
         ]
 
